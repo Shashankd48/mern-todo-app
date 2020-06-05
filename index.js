@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 5000;
@@ -6,7 +7,7 @@ const bodyParser = require("body-parser");
 
 // Database Connectivity
 mongoose
-   .connect("mongodb://localhost:27017/todo", {
+   .connect(process.env.DBURL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
