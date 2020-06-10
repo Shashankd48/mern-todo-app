@@ -2,13 +2,7 @@ const { validationResult } = require("express-validator");
 const User = require("../model/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-
-// Password encryption goes here
-const encryptPassword = async (password) => {
-   const salt = await bcrypt.genSalt(10);
-   const hashedPassword = await bcrypt.hash(password, salt);
-   return hashedPassword;
-};
+const myKey = require("../setup/config");
 
 exports.signup = async (req, res) => {
    // validate user data
@@ -21,31 +15,42 @@ exports.signup = async (req, res) => {
    }
    var { name, email, password } = req.body;
    // Check email already exist
-   User.findOne({ email }, (error, user) => {
-      if (user) {
-         return res.status(400).json({
-            error: "Account already exist",
+   User.findOne({ email })
+      .then((user) => {
+         if (user) {
+            return res.status(400).json({
+               error: "Account already exist",
+            });
+         }
+         const newUser = new User({
+            name,
+            email,
+            password,
          });
-      }
-   });
-   password = await encryptPassword(password);
-   const user = new User({
-      name,
-      email,
-      password,
-   });
-   await user.save((err, user) => {
-      if (err || !user) {
-         return res.status(400).json({
-            error: "Not able to save user In DB",
+         // encrypt password here using bcrypt.js
+         bcrypt.genSalt(10, (err, salt) => {
+            if (err) {
+               res.status(400).json({
+                  error: "Failed to generate salt!",
+               });
+            }
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+               if (err) throw err;
+               newUser.password = hash;
+               newUser
+                  .save()
+                  .then((user) => {
+                     user.password = undefined;
+                     user.__v = undefined;
+                     res.status(200).json(user);
+                  })
+                  .catch((err) =>
+                     console.log("Failed to save user in DB\n", error)
+                  );
+            });
          });
-      }
-      const token = jwt.sign({ _id: user._id }, process.env.SECRET);
-      res.header("auth-token", token).json({
-         token: token,
-         message: "LoggedIn Successfully!",
-      });
-   });
+      })
+      .catch((error) => console.log(error));
 };
 
 exports.login = async (req, res) => {
@@ -57,35 +62,49 @@ exports.login = async (req, res) => {
          parameter: errors.array()[0].param,
       });
    }
-
-   // Check email already exist
-   User.findOne({ email }, (error, user) => {
-      if (error || !user) {
-         return res.status(400).json({
-            error: "Account does not exist, please go to signup",
-         });
-      }
-      // Compare hashed password
-      bcrypt
-         .compare(password, user.password)
-         .then((result) => {
-            if (!result) {
-               return res.status(400).json({
-                  error: "Invalid Password!",
-               });
-            } else {
-               // Create and sign a token
-               const token = jwt.sign({ _id: user._id }, process.env.SECRET);
-               res.header("auth-token", token).json({
-                  token: token,
-                  message: "LoggedIn Successfully!",
-               });
-            }
-         })
-         .catch(() => {
-            return res.status(500).json({
-               error: "Unable to login, internal server error",
+   User.findOne({ email })
+      .then((user) => {
+         if (!user) {
+            return res.status(400).json({
+               error: "User not found!",
             });
-         });
-   });
+         }
+         bcrypt
+            .compare(password, user.password)
+            .then((isCorrect) => {
+               if (isCorrect) {
+                  //JWT authentication with passport.js strategy
+                  const payload = {
+                     id: user._id,
+                     email: user.email,
+                     name: user.name,
+                  };
+                  jwt.sign(
+                     payload,
+                     myKey.secret,
+                     { expiresIn: 3600 },
+                     (error, token) => {
+                        if (error) {
+                           console.log(error);
+                           return res.status(500).json({
+                              message: "Failed to generate token",
+                              error,
+                           });
+                        }
+                        return res.status(200).json({
+                           id: user._id,
+                           token: `Bearer ${token}`,
+                        });
+                     }
+                  );
+               } else {
+                  res.status(400).json({
+                     email,
+                     message: "Incorrect Password or Username!",
+                  });
+               }
+            })
+            .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
 };
