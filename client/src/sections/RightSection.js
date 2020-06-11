@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../components/Input";
 import passIcon from "../assets/passoword.png";
 import emailIcon from "../assets/email.png";
 import userIcon from "../assets/user-name.png";
 import { FaAngleRight } from "react-icons/fa";
 export default function RightSection() {
+   const [formToggler, setFormToggler] = useState(true);
+
+   //    Switch Forms
+   const switchForm = (event) => {
+      event.preventDefault();
+      setFormToggler(!formToggler);
+   };
    // Forms goes here...
    const loginForm = () => {
       return (
@@ -29,7 +36,10 @@ export default function RightSection() {
             </button>
             <div className="text-center">
                <span>
-                  Create a new account here... <a href="/login">Sign Up</a>
+                  Create a new account here...{" "}
+                  <a href="#" onClick={switchForm}>
+                     Sign Up
+                  </a>
                </span>
             </div>
          </form>
@@ -65,11 +75,18 @@ export default function RightSection() {
             </button>
             <div className="text-center">
                <span>
-                  Already have an account go to. <a href="/login">Login</a>
+                  Already have an account go to.{" "}
+                  <a href="#" onClick={switchForm}>
+                     Login
+                  </a>
                </span>
             </div>
          </form>
       );
    };
-   return <div className="col-md-6 rightSection">{signupForm()}</div>;
+   return (
+      <div className="col-md-6 rightSection">
+         {formToggler === true ? signupForm() : loginForm()}
+      </div>
+   );
 }

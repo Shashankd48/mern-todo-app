@@ -5,7 +5,7 @@ body {
 }
 button:focus,
 button:active {
-   outline: none;
+   outline: none !important;
    border: none;
 }
 a {
