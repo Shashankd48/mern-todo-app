@@ -2,5 +2,70 @@ body {
    margin: 0;
    padding: 0;
    box-sizing: border-box;
-   background-color: aquamarine;
+}
+button:focus,
+button:active {
+   outline: none;
+   border: none;
+}
+a {
+   text-decoration: none;
+   color: #ffc069 !important;
+}
+.leftSection,
+.rightSection {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+}
+.leftSection img {
+   max-width: 500px;
+}
+.rightSection {
+   background: linear-gradient(-45deg, #06102e 0%, #182958 100%);
+   color: #ffffff;
+}
+
+/* Login And signup form */
+.label {
+   fill: #ffffff;
+   color: #ffffff;
+   width: 22px;
+   margin-top: 20px;
+   position: relative;
+   left: 5px;
+   top: 30px;
+   letter-spacing: 1px;
+}
+.label img {
+   position: relative;
+   top: -5px;
+}
+.authInput {
+   background: transparent;
+   border: none;
+   border-bottom: 1px solid #ffffff;
+   outline: none;
+   width: 300px;
+   max-width: 500px;
+   color: #ffffff;
+}
+form h3 {
+   letter-spacing: 2px;
+   font-size: 1.5rem;
+}
+form a,
+span {
+   letter-spacing: 1px;
+}
+/* login and signup button */
+.authBtn {
+   margin-top: 30px;
+   padding: 10px 20px;
+   width: 300px;
+   border-radius: 100px;
+   color: #ffffff;
+   background: linear-gradient(90deg, #ff7f77 0%, #ffc069 100%);
+   border: none;
 }
