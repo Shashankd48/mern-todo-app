@@ -83,12 +83,12 @@ exports.login = async (req, res) => {
                      payload,
                      myKey.secret,
                      { expiresIn: 3600 },
-                     (error, token) => {
-                        if (error) {
-                           console.log(error);
+                     (err, token) => {
+                        if (err) {
+                           console.log(err);
                            return res.status(500).json({
-                              message: "Failed to generate token",
-                              error,
+                              error: "Failed to generate token",
+                              message: err,
                            });
                         }
                         return res.status(200).json({
@@ -100,7 +100,7 @@ exports.login = async (req, res) => {
                } else {
                   res.status(400).json({
                      email,
-                     message: "Incorrect Password or Username!",
+                     error: "Incorrect Username or Password !",
                   });
                }
             })
