@@ -45,7 +45,7 @@ exports.signup = async (req, res) => {
                      res.status(200).json(user);
                   })
                   .catch((err) =>
-                     console.log("Failed to save user in DB\n", error)
+                     console.log("Failed to save user in DB\n", err)
                   );
             });
          });

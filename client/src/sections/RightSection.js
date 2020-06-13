@@ -6,7 +6,7 @@ import userIcon from "../assets/user-name.png";
 import { FaAngleRight } from "react-icons/fa";
 import { signup, login } from "../helper/authHelper";
 import { UserContext } from "../context/UserContext";
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 export default function RightSection() {
    const context = useContext(UserContext);
    const [formToggler, setFormToggler] = useState(true);

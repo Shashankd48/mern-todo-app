@@ -140,6 +140,15 @@ span {
    form h3 {
       margin-bottom: 25px;
    }
+   .navBar img {
+      left: -20px;
+   }
+   .navBar .welcome {
+      font-size: 18px !important;
+   }
+   .main .info p {
+      font-size: 18px !important;
+   }
 }
 @media (max-wdth: 300px) {
    body {
@@ -155,36 +164,77 @@ span {
 }
 
 /* Navigation bar goese here */
-/* .home {
-   position: relative;
-   margin: 0;
-   padding: 0;
-} */
+
 .navBar {
-   width: 100%;
-   height: 90px;
-   padding: 0;
-   margin: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 85px;
    position: sticky;
    top: 0;
    left: 0;
    bottom: 0;
    right: 0;
-   background: radial-gradient(#586a92, #0f1d45) center center no-repeat;
-   text-align: center;
-   box-shadow: 0 3px 15px #0f1d45;
-}
-/* .navBar img {
-   z-index: -1;
-}  */
-.navBar h3 {
-   position: relative;
-   top: -90px;
-   left: 0;
-   bottom: 0;
-   right: 0;
+   background: radial-gradient(closest-side, #586a92 -25%, #0f1d45) center
+      center no-repeat;
+   box-shadow: 0 5px 20px #0f1d45;
    z-index: 10;
+   padding: 0 20px;
+}
+.navBar img {
+   position: relative;
+   z-index: -1;
+   top: 9px;
+}
+.welcome {
+   font-size: 20px;
+   font-weight: 350;
+   letter-spacing: 1px;
    color: #ffffff;
+   position: relative;
+   top: 7px;
+}
+.welcome span {
+   color: #fdc679;
+}
+.main {
+   height: calc(100vh - 85px);
+   background: linear-gradient(180deg, #6579a8, #0c1634);
+   color: #ffffff;
+   padding: 15px;
+}
+.main .info {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   height: 50px;
+}
+.main .info p {
+   font-size: 22px;
+   letter-spacing: 1px;
+   margin-top: 10px;
+}
+.main .info svg {
+   width: 24px;
+   fill: #ffc069;
+   margin-left: 7px;
+}
+.main .info button {
+   padding: 7px 14px;
+   font-size: 13px;
+   /* background-color: #da6b63; */
+   /* background: linear-gradient(45deg, ); */
+   background: linear-gradient(90deg, #da6b63 0%, #d39e54 100%);
+   letter-spacing: 1px;
+   border: none;
+   border-radius: 100px;
+   margin-left: 20px;
+   color: #ffffff;
+   transition: all 250ms ease-in-out;
+}
+.main .info button:hover {
+   box-shadow: 0 0 25px #d39e54;
+   transition: all 300ms ease-in-out;
 }
 /* ::placeholder {
    color: #ffffff;
