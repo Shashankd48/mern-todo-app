@@ -93,6 +93,7 @@ exports.login = async (req, res) => {
                         }
                         return res.status(200).json({
                            id: user._id,
+                           name: user.name,
                            token: `Bearer ${token}`,
                         });
                      }

@@ -154,6 +154,38 @@ span {
    }
 }
 
+/* Navigation bar goese here */
+/* .home {
+   position: relative;
+   margin: 0;
+   padding: 0;
+} */
+.navBar {
+   width: 100%;
+   height: 90px;
+   padding: 0;
+   margin: 0;
+   position: sticky;
+   top: 0;
+   left: 0;
+   bottom: 0;
+   right: 0;
+   background: radial-gradient(#586a92, #0f1d45) center center no-repeat;
+   text-align: center;
+   box-shadow: 0 3px 15px #0f1d45;
+}
+/* .navBar img {
+   z-index: -1;
+}  */
+.navBar h3 {
+   position: relative;
+   top: -90px;
+   left: 0;
+   bottom: 0;
+   right: 0;
+   z-index: 10;
+   color: #ffffff;
+}
 /* ::placeholder {
    color: #ffffff;
    opacity: 1;

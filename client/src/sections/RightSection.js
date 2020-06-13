@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Input from "../components/Input";
 import passIcon from "../assets/passoword.png";
 import emailIcon from "../assets/email.png";
 import userIcon from "../assets/user-name.png";
 import { FaAngleRight } from "react-icons/fa";
 import { signup, login } from "../helper/authHelper";
+import { UserContext } from "../context/UserContext";
+import { Redirect } from "react-router-dom";
 export default function RightSection() {
+   const context = useContext(UserContext);
    const [formToggler, setFormToggler] = useState(true);
    const [name, setName] = useState("");
    const [email, setEmail] = useState("");
@@ -16,40 +19,36 @@ export default function RightSection() {
       return <div className="errorMessage">{errorMessage}</div>;
    };
    //    Switch Forms
-   const switchForm = (event) => {
-      event.preventDefault();
+   const switchForm = () => {
       setFormToggler(!formToggler);
       setErrorMessage("");
    };
 
-   // Handle login
-   const handleLogin = (event) => {
-      event.preventDefault();
+   const userLogin = () => {
       login({ email, password })
          .then((data) => {
             if (data.error) {
-               // TODO: Delete log
-               console.log(data.error);
                setErrorMessage(data.error);
             } else {
-               // TODO: redired user to home page and delete log
-               console.log(data);
+               context.setUser({ id: data.id, name: data.name });
                localStorage.setItem("jwt", JSON.stringify(data));
             }
          })
          .catch((err) => console.log("Login Failed" + err));
+   };
+   // Handle login
+   const handleLogin = (event) => {
+      event.preventDefault();
+      userLogin();
    };
    const handleSignup = (event) => {
       event.preventDefault();
       signup({ name, email, password })
          .then((data) => {
             if (data.error) {
-               // TODO: Delete log
-               console.log(data.error);
                setErrorMessage(data.error);
             } else {
-               // TODO: redired user to home page and delete log
-               console.log(data);
+               userLogin();
             }
          })
          .catch((err) => console.log("Login Failed" + err));

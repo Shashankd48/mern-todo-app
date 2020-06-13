@@ -29,10 +29,3 @@ export const login = (user) => {
       .then((response) => response.json())
       .catch((err) => console.log(err));
 };
-
-export const logout = (next) => {
-   if (typeof window !== undefined) {
-      localStorage.removeItem("jwt");
-      next();
-   }
-};
