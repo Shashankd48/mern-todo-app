@@ -2,6 +2,9 @@ import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { Redirect } from "react-router-dom";
 import logo from "../assets/LogoBg.svg";
+import Card from "../components/Card";
+import { FiPlus } from "react-icons/fi";
+
 export default function Home() {
    const context = useContext(UserContext);
    const [profileName, setProfileName] = useState("");
@@ -19,16 +22,22 @@ export default function Home() {
       context.setUser(null);
       localStorage.removeItem("jwt");
    };
+   const modal = () => {
+      console.log("running modal");
+      return <div className="hello">Hello</div>;
+   };
    return (
       <div>
-         <div className="navBar text-center">
-            <img src={logo} alt="Logo" width="170px" />
-            <p className="welcome">
-               Hi <span>{profileName}</span> !
-            </p>
+         <div className="navBar">
+            <div className="content  col-sm-12 col-md-8 col-lg-7 m-0 p-0 m-auto">
+               <img src={logo} alt="Logo" width="150px" />
+               <p className="welcome">
+                  Hi <span>{profileName}</span> !
+               </p>
+            </div>
          </div>
          <div className="main">
-            <div className="content col-sm-8 col-md-6 offset-md-3 offset-sm-0 m-auto">
+            <div className="content col-sm-12 col-md-8 col-lg-7 m-auto">
                <div className="info">
                   <p>
                      All Tasks for today{" "}
@@ -38,7 +47,7 @@ export default function Home() {
                            focusable="false"
                            data-prefix="far"
                            data-icon="smile"
-                           class="svg-inline--fa fa-smile fa-w-16"
+                           className="svg-inline--fa fa-smile fa-w-16"
                            role="img"
                            xmlns="http://www.w3.org/2000/svg"
                            viewBox="0 0 496 512"
@@ -48,6 +57,30 @@ export default function Home() {
                      </span>
                   </p>
                   <button onClick={logout}>Logout</button>
+               </div>
+               <div className="floatingBtn">
+                  <button className="addTodo" onClick={modal}>
+                     <FiPlus />
+                  </button>
+               </div>
+               <div className="todoSection px-4">
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
+                  <Card />
                </div>
             </div>
          </div>
