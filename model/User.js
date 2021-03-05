@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 var UserSchema = new mongoose.Schema(
    {
       name: {
@@ -20,7 +21,7 @@ var UserSchema = new mongoose.Schema(
          minlength: 6,
       },
    },
-   { timestamps: true }
+   { timestamps: true, collection: "User" }
 );
 
 module.exports = mongoose.model("User", UserSchema);

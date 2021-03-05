@@ -5,17 +5,95 @@ import Card from "../components/Card";
 import { FiPlus } from "react-icons/fi";
 import Navbar from "../components/Navbar";
 import {
+   Box,
+   Typography,
+   Button,
+   Dialog,
+   DialogTitle as MuiDialogTitle,
+   DialogContent as MuiDialogContent,
+   DialogActions as MuiDialogActions,
+   IconButton,
+   TextField,
+   makeStyles,
+} from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import CloseIcon from "@material-ui/icons/Close";
+
+import {
    getTodos,
    createTodo,
    deleteTodo,
    checkTodo,
 } from "../helper/profileHelper";
+import Input from "../components/Input";
+
+const styles = (theme) => ({
+   root: {
+      margin: 0,
+      padding: theme.spacing(2),
+   },
+   closeButton: {
+      position: "absolute",
+      right: theme.spacing(1),
+      top: theme.spacing(1),
+      color: theme.palette.grey[500],
+   },
+});
+
+const useStyles = makeStyles((theme) => ({
+   root: {
+      "& .MuiTextField-root": {
+         margin: theme.spacing(1),
+         width: "25ch",
+      },
+   },
+}));
+
+const DialogTitle = withStyles(styles)((props) => {
+   const { children, classes, onClose, ...other } = props;
+   return (
+      <MuiDialogTitle disableTypography className={classes.root} {...other}>
+         <Typography variant="h6">{children}</Typography>
+         {onClose ? (
+            <IconButton
+               aria-label="close"
+               className={classes.closeButton}
+               onClick={onClose}
+            >
+               <CloseIcon />
+            </IconButton>
+         ) : null}
+      </MuiDialogTitle>
+   );
+});
+
+const DialogContent = withStyles((theme) => ({
+   root: {
+      padding: theme.spacing(2),
+   },
+}))(MuiDialogContent);
+
+const DialogActions = withStyles((theme) => ({
+   root: {
+      margin: 0,
+      padding: theme.spacing(1),
+   },
+}))(MuiDialogActions);
+
 export default function Home() {
    const context = useContext(UserContext);
    const [profileName, setProfileName] = useState("");
    const [test, setTest] = useState(false);
    const [todos, setTodos] = useState([]);
+   const [todo, setTodo] = useState("");
+   const [open, setOpen] = useState(false);
 
+   const handleClickOpen = () => {
+      setOpen(true);
+   };
+   const handleClose = () => {
+      setOpen(false);
+   };
    const loadTodos = (id, token) => {
       getTodos(id, token)
          .then((data) => {
@@ -24,6 +102,7 @@ export default function Home() {
          })
          .catch((err) => console.log(err));
    };
+
    useEffect(() => {
       if (localStorage.getItem("jwt")) {
          let info = JSON.parse(localStorage.getItem("jwt"));
@@ -44,6 +123,54 @@ export default function Home() {
       setTest(!test);
       console.log(test);
    };
+
+   const dialog = () => {
+      return (
+         <Dialog
+            onClose={handleClose}
+            aria-labelledby="customized-dialog-title"
+            open={open}
+            maxWidth="sm"
+            fullWidth={true}
+         >
+            <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+               New Task
+            </DialogTitle>
+            <DialogContent dividers>
+               <Box>
+                  <TextField
+                     id="outlined-multiline-static"
+                     label="Multiline"
+                     multiline
+                     rows={4}
+                     defaultValue="Default Value"
+                     variant="outlined"
+                     style={{ width: "100%" }}
+                     value={todo}
+                     onChange={(e) => {
+                        setTodo(e.target.value);
+                     }}
+                  />
+               </Box>
+            </DialogContent>
+            <DialogActions>
+               <Box display="flex" justifyContent="space-bwteen">
+                  <Box>
+                     <Button autoFocus onClick={handleClose} color="primary">
+                        Cancel
+                     </Button>
+                  </Box>
+                  <Box>
+                     <Button autoFocus onClick={handleClose} color="primary">
+                        Add Todo
+                     </Button>
+                  </Box>
+               </Box>
+            </DialogActions>
+         </Dialog>
+      );
+   };
+
    return (
       <div>
          <Navbar profileName={profileName} />
@@ -72,7 +199,7 @@ export default function Home() {
                </div>
 
                <div className="floatingBtn">
-                  <button className="addTodo">
+                  <button className="addTodo" onClick={handleClickOpen}>
                      <FiPlus />
                   </button>
                </div>
@@ -97,6 +224,7 @@ export default function Home() {
                </div>
             </div>
          </div>
+         {dialog()}
       </div>
    );
 }
