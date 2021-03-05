@@ -62,6 +62,7 @@ exports.login = async (req, res) => {
          parameter: errors.array()[0].param,
       });
    }
+   
    User.findOne({ email })
       .then((user) => {
          if (!user) {

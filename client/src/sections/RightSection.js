@@ -6,7 +6,7 @@ import userIcon from "../assets/user-name.png";
 import { FaAngleRight } from "react-icons/fa";
 import { signup, login } from "../helper/authHelper";
 import { UserContext } from "../context/UserContext";
-// import { Redirect } from "react-router-dom";
+
 export default function RightSection() {
    const context = useContext(UserContext);
    const [formToggler, setFormToggler] = useState(true);
@@ -30,7 +30,12 @@ export default function RightSection() {
             if (data.error) {
                setErrorMessage(data.error);
             } else {
-               context.setUser({ id: data.id, name: data.name });
+               context.setUser({
+                  id: data.id,
+                  name: data.name,
+                  token: data.token,
+               });
+               console.log(context.user);
                localStorage.setItem("jwt", JSON.stringify(data));
             }
          })

@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { login, signup } = require("../controllers/auth");
-const { check, validationResult } = require("express-validator");
+const { check } = require("express-validator");
+
 // @route    -  POST /todo/api/auth/signup
 // @desc    -   Signup routes
 // @access  -   PUBLIC

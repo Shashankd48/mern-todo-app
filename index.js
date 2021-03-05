@@ -33,6 +33,10 @@ app.use(passport.initialize());
 
 // Configuration for JWT strategy
 require("./strategies/jsonwtStrategy")(passport);
+
+// TODO: Server the static page and roduction build
+// app.use(express.static("client/build"));
+
 //Routes middleware
 app.use("/todo/api/auth", authRoute);
 app.use("/todo/api/profile", profileRoute);

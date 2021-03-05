@@ -1,18 +1,36 @@
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { Redirect } from "react-router-dom";
-import logo from "../assets/LogoBg.svg";
 import Card from "../components/Card";
 import { FiPlus } from "react-icons/fi";
-
+import Navbar from "../components/Navbar";
+import {
+   getTodos,
+   createTodo,
+   deleteTodo,
+   checkTodo,
+} from "../helper/profileHelper";
 export default function Home() {
    const context = useContext(UserContext);
    const [profileName, setProfileName] = useState("");
+   const [test, setTest] = useState(false);
+   const [todos, setTodos] = useState([]);
+
+   const loadTodos = (id, token) => {
+      getTodos(id, token)
+         .then((data) => {
+            console.log(data);
+            setTodos(data);
+         })
+         .catch((err) => console.log(err));
+   };
    useEffect(() => {
       if (localStorage.getItem("jwt")) {
          let info = JSON.parse(localStorage.getItem("jwt"));
-         context.setUser({ id: info.id, name: info.name });
+         context.setUser({ id: info.id, name: info.name, token: info.token });
          setProfileName(context.user?.name);
+         loadTodos(info.id, info.token);
+         console.log(todos);
       }
    }, []);
    if (!context.user?.id) {
@@ -22,20 +40,13 @@ export default function Home() {
       context.setUser(null);
       localStorage.removeItem("jwt");
    };
-   const modal = () => {
-      console.log("running modal");
-      return <div className="hello">Hello</div>;
+   const checkTodo = () => {
+      setTest(!test);
+      console.log(test);
    };
    return (
       <div>
-         <div className="navBar">
-            <div className="content  col-sm-12 col-md-8 col-lg-7 m-0 p-0 m-auto">
-               <img src={logo} alt="Logo" width="150px" />
-               <p className="welcome">
-                  Hi <span>{profileName}</span> !
-               </p>
-            </div>
-         </div>
+         <Navbar profileName={profileName} />
          <div className="main">
             <div className="content col-sm-12 col-md-8 col-lg-7 m-auto">
                <div className="info">
@@ -56,31 +67,33 @@ export default function Home() {
                         </svg>
                      </span>
                   </p>
+                  <p>{test}</p>
                   <button onClick={logout}>Logout</button>
                </div>
+
                <div className="floatingBtn">
-                  <button className="addTodo" onClick={modal}>
+                  <button className="addTodo">
                      <FiPlus />
                   </button>
                </div>
+
                <div className="todoSection px-4">
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
-                  <Card />
+                  {todos.map((todo, index) => {
+                     return (
+                        <div key={index}>
+                           <Card
+                              text={todo.todo}
+                              markascompled={todo.markascompleted}
+                              checkTodo={checkTodo}
+                           />
+                        </div>
+                     );
+                  })}
+                  <Card
+                     text="lroem sdnj asjnd asnd ansdkj asjkdnas kansdka ansdn"
+                     markascompled={true}
+                     checkTodo={checkTodo}
+                  />
                </div>
             </div>
          </div>

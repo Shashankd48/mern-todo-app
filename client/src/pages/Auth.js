@@ -11,6 +11,7 @@ export default function Auth() {
          context.setUser({ id: info.id, name: info.name });
       }
    }, []);
+
    if (context.user?.id) {
       return <Redirect to="/home" />;
    }

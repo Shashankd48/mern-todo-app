@@ -216,21 +216,17 @@ span {
    min-height: 50px;
    margin-top: 20px;
    color: #000000;
-   /* box-shadow: 5px 5px 13px rgba(0, 0, 0, 0.2),
-      -5px -5px 13px rgba(0, 0, 0, 0.1); */
-   /* box-shadow: 20px 20px 60px #d9d9d9, -20px -20px 60px #f0f0f0; */
    box-shadow: 5px 5px 40px #d9d9d9, -5px -5px 40px #f0f0f0;
-
    border-radius: 10px;
    background: #ffffff;
    transition: all 400ms ease-in-out;
 }
 .todoCard p {
    margin: 0;
+   margin-left: 20px;
 }
 .todoCard .todoBtn {
    border-radius: 100px;
-   margin-left: 12px;
    border: none;
    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
    background: #ffffff;
