@@ -1,71 +1,64 @@
 const Todo = require("../model/Todo");
 
-exports.getAllTodo = (req, res) => {
-   Todo.find({ userId: req.user._id })
-      .then((todos) => {
-         return todos.length > 0
-            ? res.status(200).json({ error: false, todos })
-            : res
-                 .status(200)
-                 .json({ error: true, msg: "No todos found", todos });
-      })
-      .catch((error) => {
-         console.log("No Todo Found", error);
-      });
+exports.getAllTodo = async (req, res) => {
+   const todos = await Todo.find({ userId: req.user._id });
+   return todos.length > 0
+      ? res.status(200).json({ error: false, todos })
+      : res.status(404).json({ error: true, msg: "No todos found", todos });
 };
 
-exports.createTodo = (req, res) => {
-   console.log("todo", req.body.todo);
-   const newTodo = new Todo({
+exports.createTodo = async (req, res) => {
+   const todo = new Todo({
       todo: req.body.todo,
       userId: req.user._id,
    });
-   newTodo
-      .save()
-      .then((todo) => {
-         res.status(200).json({
-            message: "Todo Added successfully! 👍",
-            todo,
-         });
-      })
-      .catch((error) => console.log("Failed to save todo in DB\n", error));
+   await todo.save();
+
+   return todo
+      ? res.status(200).json({
+           error: false,
+           todo,
+        })
+      : res.status(400).json({
+           error: true,
+           todo,
+           msg: "Failed to save todo!",
+        });
 };
 
-exports.removeTodo = (req, res) => {
+exports.removeTodo = async (req, res) => {
    const { todoId } = req.params;
-   Todo.deleteOne({ _id: todoId, userId: req.user._id })
-      .then((todo) => {
-         if (todo.deletedCount === 0) {
-            return res.status(200).json({
-               message: "Todo does not exist ❌",
-               todo,
-            });
-         }
-         res.status(200).json({
-            message: "Todo Deleted Successfully ✔",
-            todo,
-         });
-      })
-      .catch((error) => console.log("Failed to delete todo❕\n", error));
+   const todo = await Todo.deleteOne({ _id: todoId, userId: req.user._id });
+
+   return todo.deletedCount === 0
+      ? res.status(200).json({
+           error: false,
+           message: "Todo does not exist ❌",
+           todo,
+        })
+      : res.status(400).json({
+           error: true,
+           message: "Todo does not exist ❌",
+           todo,
+        });
 };
 
-exports.markAsCompleted = (req, res) => {
+exports.markAsCompleted = async (req, res) => {
    const { todoId, toggle } = req.params;
-   Todo.findOneAndUpdate(
+
+   const todo = await Todo.findOneAndUpdate(
       { _id: todoId, userId: req.user._id },
       { $set: { markascompleted: toggle } },
-      { new: true },
-      (error, todo) => {
-         if (error || !todo) {
-            res.status(400).json({
-               message: "Cannot update Todo",
-               error,
-            });
-         }
-         res.status(200).json({
-            message: "Todo marked as completed ✔",
-            todo,
-         });
-      }
+      { new: true }
    );
+   return todo
+      ? res.status(200).json({
+           message: "Todo marked as completed ✔",
+           todo,
+           error: false,
+        })
+      : res.status(400).json({
+           message: "Cannot update Todo",
+           error: true,
+        });
 };

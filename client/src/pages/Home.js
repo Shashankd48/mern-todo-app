@@ -41,15 +41,6 @@ const styles = (theme) => ({
    },
 });
 
-const useStyles = makeStyles((theme) => ({
-   root: {
-      "& .MuiTextField-root": {
-         margin: theme.spacing(1),
-         width: "25ch",
-      },
-   },
-}));
-
 const DialogTitle = withStyles(styles)((props) => {
    const { children, classes, onClose, ...other } = props;
    return (
@@ -97,7 +88,7 @@ export default function Home() {
    };
 
    const _createTodo = () => {
-      createTodo(context.user?.id, context.user.token, todo)
+      createTodo(todo)
          .then((data) => {
             todos.push(data.todo);
             setTodo({ ...todos });
@@ -110,6 +101,7 @@ export default function Home() {
    const loadTodos = () => {
       getTodos()
          .then((data) => {
+            console.log("data: ", data);
             if (!data.error) {
                setTodos(data.todos);
             }
@@ -134,6 +126,7 @@ export default function Home() {
       context.setUser(null);
       localStorage.removeItem("jwt");
    };
+
    const checkTodo = (id) => {
       console.log("running");
       let index = todos.findIndex((todo) => todo._id === id);
@@ -162,7 +155,6 @@ export default function Home() {
                      label="Multiline"
                      multiline
                      rows={4}
-                     defaultValue="Default Value"
                      variant="outlined"
                      style={{ width: "100%" }}
                      value={todo}

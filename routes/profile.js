@@ -24,7 +24,7 @@ router.get(
 // @desc    -   Create new Todo
 // @access  -   PRIVATE
 router.post(
-   "/createtodo",
+   "/createTodo",
    passport.authenticate("jwt", {
       session: false,
       failureRedirect: "/todo/api/profile/unAuthorized",
