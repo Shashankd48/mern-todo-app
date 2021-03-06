@@ -25,7 +25,8 @@ import {
    deleteTodo,
    checkTodo,
 } from "../helper/profileHelper";
-import Input from "../components/Input";
+
+import Axios from "../setup/axios";
 
 const styles = (theme) => ({
    root: {
@@ -94,6 +95,7 @@ export default function Home() {
    const handleClose = () => {
       setOpen(false);
    };
+
    const _createTodo = () => {
       createTodo(context.user?.id, context.user.token, todo)
          .then((data) => {
@@ -104,11 +106,13 @@ export default function Home() {
             console.log("error:", error);
          });
    };
-   const loadTodos = (id, token) => {
-      getTodos(id, token)
+
+   const loadTodos = () => {
+      getTodos()
          .then((data) => {
-            console.log(data);
-            setTodos(data);
+            if (!data.error) {
+               setTodos(data.todos);
+            }
          })
          .catch((err) => console.log(err));
    };
@@ -118,7 +122,7 @@ export default function Home() {
          let info = JSON.parse(localStorage.getItem("jwt"));
          context.setUser({ id: info.id, name: info.name, token: info.token });
          setProfileName(context.user?.name);
-         loadTodos(info.id, info.token);
+         loadTodos();
          console.log(todos);
       }
    }, []);
@@ -130,9 +134,13 @@ export default function Home() {
       context.setUser(null);
       localStorage.removeItem("jwt");
    };
-   const checkTodo = () => {
-      setTest(!test);
-      console.log(test);
+   const checkTodo = (id) => {
+      console.log("running");
+      let index = todos.findIndex((todo) => todo._id === id);
+      console.log(index);
+      todos[index].markascompleted = !todos[index].markascompleted;
+      setTodos(todos);
+      console.log(todos);
    };
 
    const dialog = () => {
@@ -217,22 +225,18 @@ export default function Home() {
 
                <div className="todoSection px-4">
                   {todos &&
+                     todos.length > 0 &&
                      todos.map((todo, index) => {
                         return (
-                           <div key={index}>
+                           <div key={todo._id}>
                               <Card
                                  text={todo.todo}
-                                 markascompled={todo.markascompleted}
-                                 checkTodo={checkTodo}
+                                 markascompleted={todo.markascompleted}
+                                 checkTodo={() => checkTodo(todo._id)}
                               />
                            </div>
                         );
                      })}
-                  <Card
-                     text="lroem sdnj asjnd asnd ansdkj asjkdnas kansdka ansdn"
-                     markascompled={true}
-                     checkTodo={checkTodo}
-                  />
                </div>
             </div>
          </div>

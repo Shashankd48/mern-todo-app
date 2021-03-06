@@ -1,5 +1,4 @@
 const Todo = require("../model/Todo");
-const { ObjectId } = require("mongodb");
 
 exports.getAllTodo = (req, res) => {
    Todo.find({ userId: req.user._id })
@@ -16,6 +15,7 @@ exports.getAllTodo = (req, res) => {
 };
 
 exports.createTodo = (req, res) => {
+   console.log("todo", req.body.todo);
    const newTodo = new Todo({
       todo: req.body.todo,
       userId: req.user._id,

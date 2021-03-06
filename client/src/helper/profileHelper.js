@@ -1,31 +1,29 @@
 import { api } from "../setup/config";
+import Axios from "../setup/axios";
 
-// getAll tudo
-export const getTodos = (userId, token) => {
-   return fetch(`${api.profile}/${userId}`, {
-      method: "GET",
-      headers: {
-         Accept: "application/json",
-         "Content-Type": "application/json",
-         Authorization: token,
-      },
-   })
-      .then((response) => {
-         return response.json();
+export function getTodos() {
+   let request;
+   request = Axios.get("/profile");
+   return request
+      .then((result) => {
+         return result.data;
       })
-      .catch((err) => console.log(err));
-};
+      .catch((error) => {
+         throw error;
+      });
+}
 
 //create todo
 export const createTodo = (userId, token, todo) => {
-   return fetch(`${api.profile}/createtodo/${userId}`, {
+   console.log("todo: ", todo);
+   return fetch(`${api.profile}/createtodo`, {
       method: "POST",
       headers: {
          Accept: "application/json",
          "Content-Type": "application/json",
          Authorization: token,
       },
-      body: JSON.stringify(todo),
+      body: todo,
    })
       .then((response) => response.json())
       .catch((err) => console.log(err));

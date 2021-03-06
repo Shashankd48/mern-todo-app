@@ -1,23 +1,19 @@
 import React from "react";
 import { FaTimes, FaCheck } from "react-icons/fa";
-import { GiCircle } from "react-icons/gi";
-export default function Card({
-   text,
-   markascompled = true,
-   deleteTodo,
-   checkTodo,
-}) {
+
+export default function Card({ text, markascompleted, deleteTodo, checkTodo }) {
+   console.log(markascompleted);
    return (
       <div className="todoCard">
          <div className="d-flex">
-            {markascompled === true ? (
+            {markascompleted === true ? (
                <button className="todoBtn markCompletedBtn" onClick={checkTodo}>
                   <span>
                      <FaCheck />
                   </span>
                </button>
             ) : (
-               <button className="todoBtn markBtn">
+               <button className="todoBtn markBtn" onClick={checkTodo}>
                   <span>
                      <FaTimes />
                   </span>
