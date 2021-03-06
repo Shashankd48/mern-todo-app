@@ -62,7 +62,7 @@ exports.login = async (req, res) => {
          parameter: errors.array()[0].param,
       });
    }
-   
+
    User.findOne({ email })
       .then((user) => {
          if (!user) {
@@ -95,7 +95,7 @@ exports.login = async (req, res) => {
                         return res.status(200).json({
                            id: user._id,
                            name: user.name,
-                           token: `Bearer ${token}`,
+                           token: token,
                         });
                      }
                   );
@@ -110,3 +110,5 @@ exports.login = async (req, res) => {
       })
       .catch((error) => console.log(error));
 };
+
+exports.isSignedIn = async (req, res, next) => {};

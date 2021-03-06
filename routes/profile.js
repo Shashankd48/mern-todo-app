@@ -8,36 +8,56 @@ const {
    markAsCompleted,
 } = require("../controllers/profile");
 
-// @route    -  GET   /todo/api/profile/:userId
-// @desc    -   Get All todo , Home Page
+// @route    -  GET   /todo/api/profile/
+// @desc    -   Get All todos
 // @access  -   PRIVATE
-router.get("/", passport.authenticate("jwt", { session: false }), getAllTodo);
+router.get(
+   "/",
+   passport.authenticate("jwt", {
+      session: false,
+      failureRedirect: "/todo/api/profile/unAuthorized",
+   }),
+   getAllTodo
+);
 
-// @route    -  POST   /todo/api/profile/createtodo/:userId
+// @route    -  POST   /todo/api/profile/createtodo/
 // @desc    -   Create new Todo
 // @access  -   PRIVATE
 router.post(
    "/createtodo",
-   passport.authenticate("jwt", { session: false }),
+   passport.authenticate("jwt", {
+      session: false,
+      failureRedirect: "/todo/api/profile/unAuthorized",
+   }),
    createTodo
 );
 
-// @route    -  DELETE   /todo/api/profile/removetodo/:userId/:todoId
+// @route    -  DELETE   /todo/api/profile/removetodo//:todoId
 // @desc    -   Create new Todo
 // @access  -   PRIVATE
 router.delete(
    "/removetodo/:todoId",
-   passport.authenticate("jwt", { session: false }),
+   passport.authenticate("jwt", {
+      session: false,
+      failureRedirect: "/todo/api/profile/unAuthorized",
+   }),
    removeTodo
 );
 
-// @route    -  PUT   /todo/api/profile/markascompleted/:userId/:todoId/:toggle
+// @route    -  PUT   /todo/api/profile/markascompleted/:todoId/:toggle
 // @desc    -   Mark todo as completed
 // @access  -   PRIVATE
 router.put(
    "/markascompleted/:todoId/:toggle",
-   passport.authenticate("jwt", { session: false }),
+   passport.authenticate("jwt", {
+      session: false,
+      failureRedirect: "/todo/api/profile/unAuthorized",
+   }),
    markAsCompleted
 );
+
+router.get("/unAuthorized", (req, res, next) => {
+   return res.status(401).json({ error: true, msg: "Unauthorized!" });
+});
 
 module.exports = router;
