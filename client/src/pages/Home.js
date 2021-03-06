@@ -22,11 +22,9 @@ import CloseIcon from "@material-ui/icons/Close";
 import {
    getTodos,
    createTodo,
-   deleteTodo,
-   checkTodo,
+   removeTodo,
+   markAsCompleted,
 } from "../helper/profileHelper";
-
-import Axios from "../setup/axios";
 
 const styles = (theme) => ({
    root: {
@@ -86,35 +84,39 @@ export default function Home() {
    const handleClose = () => {
       setOpen(false);
    };
-
-   const _createTodo = () => {
-      createTodo(todo)
-         .then((data) => {
-            todos.push(data.todo);
-            setTodo({ ...todos });
-         })
-         .catch((error) => {
-            console.log("error:", error);
-         });
+   const logout = () => {
+      context.setUser(null);
+      localStorage.removeItem("jwt");
    };
 
-   const loadTodos = () => {
-      getTodos()
-         .then((data) => {
+   const _createTodo = () => {
+      createTodo(todo).then((data) => {
+         todos.push(data.todo);
+         setTodo({ ...todos });
+      });
+      setTodo("");
+      handleClickOpen();
+   };
+
+   const _getTodos = () => {
+      getTodos().then((data) => {
+         console.log("data: ", data);
+         if (!data.error) {
+            setTodos(data.todos);
+         } else {
             console.log("data: ", data);
-            if (!data.error) {
-               setTodos(data.todos);
-            }
-         })
-         .catch((err) => console.log(err));
+            // logout();
+         }
+      });
    };
 
    useEffect(() => {
       if (localStorage.getItem("jwt")) {
+         _getTodos();
          let info = JSON.parse(localStorage.getItem("jwt"));
          context.setUser({ id: info.id, name: info.name, token: info.token });
          setProfileName(context.user?.name);
-         loadTodos();
+
          console.log(todos);
       }
    }, []);
@@ -122,10 +124,6 @@ export default function Home() {
    if (!context.user?.id) {
       return <Redirect to="/" />;
    }
-   const logout = () => {
-      context.setUser(null);
-      localStorage.removeItem("jwt");
-   };
 
    const checkTodo = (id) => {
       console.log("running");

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const { check } = require("express-validator");
 const {
    getAllTodo,
    createTodo,
@@ -28,6 +29,9 @@ router.post(
    passport.authenticate("jwt", {
       session: false,
       failureRedirect: "/todo/api/profile/unAuthorized",
+   }),
+   check("todo", "Please enter todo").isLength({
+      min: 3,
    }),
    createTodo
 );
@@ -57,7 +61,7 @@ router.put(
 );
 
 router.get("/unAuthorized", (req, res, next) => {
-   return res.status(401).json({ error: true, msg: "Unauthorized!" });
+   return res.status(200).json({ error: true, msg: "Unauthorized!" });
 });
 
 module.exports = router;

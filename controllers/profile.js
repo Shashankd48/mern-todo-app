@@ -1,3 +1,4 @@
+const { validationResult } = require("express-validator");
 const Todo = require("../model/Todo");
 
 exports.getAllTodo = async (req, res) => {
@@ -8,6 +9,15 @@ exports.getAllTodo = async (req, res) => {
 };
 
 exports.createTodo = async (req, res) => {
+   // validate user data
+   const errors = validationResult(req);
+   if (!errors.isEmpty()) {
+      return res.status(422).json({
+         error: true,
+         msg: errors.array()[0].msg,
+         parameter: errors.array()[0].param,
+      });
+   }
    const todo = new Todo({
       todo: req.body.todo,
       userId: req.user._id,
