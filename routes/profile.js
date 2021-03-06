@@ -11,17 +11,13 @@ const {
 // @route    -  GET   /todo/api/profile/:userId
 // @desc    -   Get All todo , Home Page
 // @access  -   PRIVATE
-router.get(
-   "/:userId",
-   passport.authenticate("jwt", { session: false }),
-   getAllTodo
-);
+router.get("/", passport.authenticate("jwt", { session: false }), getAllTodo);
 
 // @route    -  POST   /todo/api/profile/createtodo/:userId
 // @desc    -   Create new Todo
 // @access  -   PRIVATE
 router.post(
-   "/createtodo/:userId",
+   "/createtodo",
    passport.authenticate("jwt", { session: false }),
    createTodo
 );
@@ -30,7 +26,7 @@ router.post(
 // @desc    -   Create new Todo
 // @access  -   PRIVATE
 router.delete(
-   "/removetodo/:userId/:todoId",
+   "/removetodo/:todoId",
    passport.authenticate("jwt", { session: false }),
    removeTodo
 );
@@ -39,7 +35,7 @@ router.delete(
 // @desc    -   Mark todo as completed
 // @access  -   PRIVATE
 router.put(
-   "/markascompleted/:userId/:todoId/:toggle",
+   "/markascompleted/:todoId/:toggle",
    passport.authenticate("jwt", { session: false }),
    markAsCompleted
 );

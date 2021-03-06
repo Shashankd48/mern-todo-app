@@ -2,10 +2,13 @@ const Todo = require("../model/Todo");
 const { ObjectId } = require("mongodb");
 
 exports.getAllTodo = (req, res) => {
-   const userId = req.params.userId;
-   Todo.find({ userId: userId })
+   Todo.find({ userId: req.user._id })
       .then((todos) => {
-         res.status(200).json(todos);
+         return todos.length > 0
+            ? res.status(200).json({ error: false, todos })
+            : res
+                 .status(200)
+                 .json({ error: true, msg: "No todos found", todos });
       })
       .catch((error) => {
          console.log("No Todo Found", error);
@@ -13,10 +16,9 @@ exports.getAllTodo = (req, res) => {
 };
 
 exports.createTodo = (req, res) => {
-   const userId = req.params.userId;
    const newTodo = new Todo({
       todo: req.body.todo,
-      userId: ObjectId(userId),
+      userId: req.user._id,
    });
    newTodo
       .save()
@@ -30,8 +32,8 @@ exports.createTodo = (req, res) => {
 };
 
 exports.removeTodo = (req, res) => {
-   const { userId, todoId } = req.params;
-   Todo.deleteOne({ _id: todoId, userId: userId })
+   const { todoId } = req.params;
+   Todo.deleteOne({ _id: todoId, userId: req.user._id })
       .then((todo) => {
          if (todo.deletedCount === 0) {
             return res.status(200).json({
@@ -48,9 +50,9 @@ exports.removeTodo = (req, res) => {
 };
 
 exports.markAsCompleted = (req, res) => {
-   const { userId, todoId, toggle } = req.params;
+   const { todoId, toggle } = req.params;
    Todo.findOneAndUpdate(
-      { _id: todoId, userId: userId },
+      { _id: todoId, userId: req.user._id },
       { $set: { markascompleted: toggle } },
       { new: true },
       (error, todo) => {

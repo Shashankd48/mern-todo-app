@@ -2,30 +2,21 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 5000;
-const mongoose = require("mongoose");
 const passport = require("passport");
-const bodyParser = require("body-parser");
 const cors = require("cors");
-const key = require("./setup/config");
+const cookieParser = require("cookie-parser");
 
-// Database Connectivity
-mongoose
-   .connect(key.dburl, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-   })
-   .then(() => console.log("DB CONNECTED SUCCESSFULLY"))
-   .catch((error) => console.error("FAILED TO CONNECT DB"));
+// Connection to Database
+require("./setup/dbConfig");
 
 // import routes here
 const authRoute = require("./routes/auth");
 const profileRoute = require("./routes/profile");
 
 // other middlewares
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
 app.use(cors());
 
 // Passport middleware
@@ -34,7 +25,7 @@ app.use(passport.initialize());
 // Configuration for JWT strategy
 require("./strategies/jsonwtStrategy")(passport);
 
-// TODO: Server the static page and roduction build
+// TODO: Server the static page and profuction build
 // app.use(express.static("client/build"));
 
 //Routes middleware

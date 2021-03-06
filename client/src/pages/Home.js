@@ -94,6 +94,16 @@ export default function Home() {
    const handleClose = () => {
       setOpen(false);
    };
+   const _createTodo = () => {
+      createTodo(context.user?.id, context.user.token, todo)
+         .then((data) => {
+            todos.push(data.todo);
+            setTodo({ ...todos });
+         })
+         .catch((error) => {
+            console.log("error:", error);
+         });
+   };
    const loadTodos = (id, token) => {
       getTodos(id, token)
          .then((data) => {
@@ -112,6 +122,7 @@ export default function Home() {
          console.log(todos);
       }
    }, []);
+
    if (!context.user?.id) {
       return <Redirect to="/" />;
    }
@@ -161,7 +172,7 @@ export default function Home() {
                      </Button>
                   </Box>
                   <Box>
-                     <Button autoFocus onClick={handleClose} color="primary">
+                     <Button autoFocus onClick={_createTodo} color="primary">
                         Add Todo
                      </Button>
                   </Box>
@@ -205,17 +216,18 @@ export default function Home() {
                </div>
 
                <div className="todoSection px-4">
-                  {todos.map((todo, index) => {
-                     return (
-                        <div key={index}>
-                           <Card
-                              text={todo.todo}
-                              markascompled={todo.markascompleted}
-                              checkTodo={checkTodo}
-                           />
-                        </div>
-                     );
-                  })}
+                  {todos &&
+                     todos.map((todo, index) => {
+                        return (
+                           <div key={index}>
+                              <Card
+                                 text={todo.todo}
+                                 markascompled={todo.markascompleted}
+                                 checkTodo={checkTodo}
+                              />
+                           </div>
+                        );
+                     })}
                   <Card
                      text="lroem sdnj asjnd asnd ansdkj asjkdnas kansdka ansdn"
                      markascompled={true}
