@@ -6,7 +6,6 @@ import userIcon from "../assets/user-name.png";
 import { FaAngleRight } from "react-icons/fa";
 import { signup, login } from "../helper/authHelper";
 import { UserContext } from "../context/UserContext";
-// import Axios from "axios";
 import { api } from "../setup/config";
 import Axios from "../setup/axios";
 

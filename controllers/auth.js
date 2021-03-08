@@ -9,7 +9,8 @@ exports.signup = async (req, res) => {
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
       return res.status(422).json({
-         error: errors.array()[0].msg,
+         error: true,
+         msg: errors.array()[0].msg,
          parameter: errors.array()[0].param,
       });
    }
@@ -54,11 +55,12 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-   const { email, password } = req.body;
+   const { email, password } = req.body.user;
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
       return res.status(422).json({
-         error: errors.array()[0].msg,
+         error: true,
+         msg: errors.array()[0].msg,
          parameter: errors.array()[0].param,
       });
    }
@@ -83,7 +85,7 @@ exports.login = async (req, res) => {
                   jwt.sign(
                      payload,
                      myKey.secret,
-                     { expiresIn: 300 },
+                     { expiresIn: "10d" },
                      (err, token) => {
                         if (err) {
                            console.log(err);

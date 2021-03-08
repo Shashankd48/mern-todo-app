@@ -2,7 +2,12 @@ const { validationResult } = require("express-validator");
 const Todo = require("../model/Todo");
 
 exports.getAllTodo = async (req, res) => {
-   const todos = await Todo.find({ userId: req.user._id });
+   const todos = await Todo.find({ userId: req.user._id }).select([
+      "-__v",
+      "-updatedAt",
+      "-userId",
+      "-createdAt",
+   ]);
    return todos.length > 0
       ? res.status(200).json({ error: false, todos })
       : res.status(404).json({ error: true, msg: "No todos found", todos });
