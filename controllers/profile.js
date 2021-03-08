@@ -65,7 +65,7 @@ exports.markAsCompleted = async (req, res) => {
       { _id: todoId, userId: req.user._id },
       { $set: { markascompleted: toggle } },
       { new: true }
-   );
+   ).select(["-__v", "-updatedAt", "-userId", "-createdAt"]);
    return todo
       ? res.status(200).json({
            message: "Todo marked as completed ✔",

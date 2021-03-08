@@ -99,10 +99,10 @@ export default function Home() {
          if (data.todo) {
             todos.push(data.todo);
             setTodo({ ...todos });
+            setTodo("");
+            setOpen(false);
          }
       });
-      setTodo("");
-      handleClickOpen();
    };
 
    const _getTodos = () => {
@@ -135,12 +135,13 @@ export default function Home() {
    }
 
    const checkTodo = (id) => {
-      console.log("running");
       let index = todos.findIndex((todo) => todo._id === id);
-      console.log(index);
-      todos[index].markascompleted = !todos[index].markascompleted;
-      setTodos(todos);
-      console.log(todos);
+      markAsCompleted(id, !todos[index].markascompleted).then((data) => {
+         if (!data.error) {
+            todos[index].markascompleted = !todos[index].markascompleted;
+            setTodo({ ...todos });
+         }
+      });
    };
 
    const dialog = () => {
@@ -224,19 +225,22 @@ export default function Home() {
                </div>
 
                <div className="todoSection px-4">
-                  {todos &&
-                     todos.length > 0 &&
-                     todos.map((todo, index) => {
-                        return (
-                           <div key={todo._id}>
-                              <Card
-                                 text={todo.todo}
-                                 markascompleted={todo.markascompleted}
-                                 checkTodo={() => checkTodo(todo._id)}
-                              />
-                           </div>
-                        );
-                     })}
+                  {todos.map((todo, index) => {
+                     console.log("home", todo.markascompleted);
+                     return (
+                        <div key={todo._id}>
+                           <Card
+                              index={index}
+                              id={todo._id}
+                              text={todo.todo}
+                              markascompleted={todo.markascompleted}
+                              checkTodo={() => {
+                                 checkTodo(todo._id);
+                              }}
+                           />
+                        </div>
+                     );
+                  })}
                </div>
             </div>
          </div>

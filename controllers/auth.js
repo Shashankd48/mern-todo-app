@@ -15,6 +15,7 @@ exports.signup = async (req, res) => {
       });
    }
    var { name, email, password } = req.body;
+
    // Check email already exist
    User.findOne({ email })
       .then((user) => {
@@ -43,7 +44,33 @@ exports.signup = async (req, res) => {
                   .then((user) => {
                      user.password = undefined;
                      user.__v = undefined;
-                     res.status(200).json(user);
+
+                     // generate JWT auth
+                     //JWT authentication with passport.js strategy
+                     const payload = {
+                        id: user._id,
+                        email: user.email,
+                        name: user.name,
+                     };
+                     jwt.sign(
+                        payload,
+                        myKey.secret,
+                        { expiresIn: "10d" },
+                        (err, token) => {
+                           if (err) {
+                              console.log(err);
+                              return res.status(500).json({
+                                 error: "Failed to generate token",
+                                 message: err,
+                              });
+                           }
+                           return res.status(200).json({
+                              id: user._id,
+                              name: user.name,
+                              token: token,
+                           });
+                        }
+                     );
                   })
                   .catch((err) =>
                      console.log("Failed to save user in DB\n", err)
@@ -55,7 +82,7 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-   const { email, password } = req.body.user;
+   const { email, password } = req.body;
    const errors = validationResult(req);
    if (!errors.isEmpty()) {
       return res.status(422).json({

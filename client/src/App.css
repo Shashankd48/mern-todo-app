@@ -2,6 +2,7 @@ body {
    margin: 0;
    padding: 0;
    box-sizing: border-box;
+   overflow: hidden;
 }
 .MuiInputBase-root,
 .MuiInputBase-input {
@@ -34,6 +35,7 @@ a {
    justify-content: center;
    align-items: center;
    height: 100vh;
+   overflow: hidden;
 }
 .leftSection img {
    max-width: 500px;
@@ -195,7 +197,7 @@ span {
 }
 .main .info button {
    padding: 7px 14px;
-   font-size: 13px;
+   font-size: 14px;
    background: linear-gradient(90deg, #da6b63 0%, #d39e54 100%);
    letter-spacing: 1px;
    border: none;
@@ -211,7 +213,7 @@ span {
 
 /* Todo goes*/
 .todoSection {
-   height: calc(100vh - 155px);
+   height: calc(100vh - 185px);
    background: #ffffff;
    padding: 10px 18px;
    overflow-y: auto;
@@ -222,7 +224,6 @@ span {
 .todoCard {
    display: flex;
    align-items: center;
-   justify-content: space-between;
    padding: 20px 30px;
    min-height: 50px;
    margin-top: 20px;
@@ -235,6 +236,21 @@ span {
 .todoCard p {
    margin: 0;
    margin-left: 20px;
+   text-align: left;
+   font-weight: 500;
+   opacity: 0.9;
+   font-size: 16px;
+}
+.textdecorate {
+   text-decoration: line-through;
+   opacity: 0.5;
+   color: rgb(145, 145, 145);
+}
+.flex-btn {
+   justify-self: flex-end;
+}
+.flex-text {
+   flex: 2;
 }
 .todoCard .todoBtn {
    border-radius: 100px;
@@ -252,6 +268,7 @@ span {
 }
 .todoCard .deleteBtn {
    background: #f3635f;
+   padding: 2px 5px;
 }
 .todoCard span {
    position: relative;
@@ -266,6 +283,7 @@ span {
    justify-content: center;
    margin: 0 auto;
    background-color: #ffffff;
+   /* margin: 0 20px 20px 0; */
 }
 .addTodo {
    position: absolute;
@@ -273,13 +291,14 @@ span {
    justify-content: center;
    padding: 15px;
    bottom: 0;
-   margin-bottom: 25px;
+   margin-bottom: 5px;
    border: none;
    border-radius: 100px;
    color: #ffffff;
    font-size: 28px;
    background: radial-gradient(#f2635e, #fca869);
    box-shadow: 0 0 60px #fca869;
+   z-index: 10;
 }
 
 @media (max-width: 576px) {
@@ -312,6 +331,9 @@ span {
    .todoSection {
       padding: 7px 10px;
    }
+   .addTodo {
+      padding: 10px;
+   }
 }
 @media (max-wdth: 300px) {
    body {
@@ -328,7 +350,7 @@ span {
 
 /* Change scroll bar*/
 ::-webkit-scrollbar {
-   width: 0.7em;
+   width: 0.6em;
    height: 40px;
    border-radius: 200px;
    /* background-color: #f5aa54; */

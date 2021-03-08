@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaTimes, FaCheck } from "react-icons/fa";
 
-export default function Card({ text, markascompleted, deleteTodo, checkTodo }) {
-   console.log(markascompleted);
+export default function Card({
+   index,
+   text,
+   markascompleted,
+   deleteTodo,
+   checkTodo,
+}) {
    return (
       <div className="todoCard">
-         <div className="d-flex">
+         <div className="d-flex flex-btn">
             {markascompleted === true ? (
                <button className="todoBtn markCompletedBtn" onClick={checkTodo}>
                   <span>
@@ -19,10 +24,14 @@ export default function Card({ text, markascompleted, deleteTodo, checkTodo }) {
                   </span>
                </button>
             )}
-            <p>{text}</p>
+         </div>
+         <div className="d-flex flex-text">
+            <p className={markascompleted ? "textdecorate" : ""}>{`${
+               index + 1
+            }. ${text}`}</p>
          </div>
 
-         <div className="d-flex ">
+         <div className="d-flex flex-btn">
             <button className="todoBtn deleteBtn" onClick={deleteTodo}>
                <span>
                   <FaTimes />

@@ -46,11 +46,13 @@ export default function RightSection() {
          })
          .catch((err) => console.log("Login Failed" + err));
    };
+
    // Handle login
    const handleLogin = (event) => {
       event.preventDefault();
       userLogin();
    };
+
    const handleSignup = (event) => {
       event.preventDefault();
       signup({ name, email, password })
@@ -58,7 +60,16 @@ export default function RightSection() {
             if (data.error) {
                setErrorMessage(data.error);
             } else {
-               userLogin();
+               context.setUser({
+                  id: data.id,
+                  name: data.name,
+                  token: data.token,
+               });
+               Axios.defaults.headers.common.Authorization = `Bearer ${data.token}`;
+               Axios.defaults.headers.post["Content-Type"] = "application/json";
+               Axios.defaults.baseURL = api.baseUrl;
+               console.log(context.user);
+               localStorage.setItem("jwt", JSON.stringify(data));
             }
          })
          .catch((err) => console.log("Login Failed" + err));

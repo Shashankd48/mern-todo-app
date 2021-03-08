@@ -26,12 +26,10 @@ router.post(
 router.post(
    "/login",
    [
-      check("user.email", "Email is required").isEmail(),
-      check("user.password", "Password should be at 6 character long").isLength(
-         {
-            min: 6,
-         }
-      ),
+      check("email", "Email is required").isEmail(),
+      check("password", "Password should be at 6 character long").isLength({
+         min: 6,
+      }),
    ],
    login
 );
