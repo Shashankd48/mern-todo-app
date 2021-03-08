@@ -3,6 +3,7 @@ import LeftSection from "../sections/LeftSection";
 import RightSection from "../sections/RightSection";
 import { UserContext } from "../context/UserContext";
 import { Redirect } from "react-router-dom";
+
 export default function Auth() {
    const context = useContext(UserContext);
    useEffect(() => {

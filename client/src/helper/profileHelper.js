@@ -1,6 +1,9 @@
 import { api } from "../setup/config";
 import Axios from "../setup/axios";
-
+// import Axios from "axios";
+import { useContext } from "react";
+// import { UserContext } from "../context/UserContext";z
+// const context = useContext(UserContext);
 export function getTodos() {
    let request;
    request = Axios.get("/profile");

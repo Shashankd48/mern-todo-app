@@ -1,4 +1,5 @@
 import { api } from "../setup/config";
+import Axios from "../setup/axios";
 
 // Signup
 export const signup = (user) => {
@@ -15,6 +16,8 @@ export const signup = (user) => {
       })
       .catch((err) => console.log(err));
 };
+
+// exports
 
 // Login Method
 export const login = (user) => {

@@ -3,6 +3,17 @@ body {
    padding: 0;
    box-sizing: border-box;
 }
+.MuiInputBase-root,
+.MuiInputBase-input {
+   color: #282828 !important;
+   background-color: #f0f0f0 !important;
+   border: none !important;
+}
+.MuiOutlinedInput-notchedOutline,
+.Mui-focused {
+   border: none;
+}
+
 button:focus,
 button:active {
    outline: none !important;

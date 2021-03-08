@@ -14,7 +14,6 @@ import {
    DialogActions as MuiDialogActions,
    IconButton,
    TextField,
-   makeStyles,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
@@ -30,6 +29,8 @@ const styles = (theme) => ({
    root: {
       margin: 0,
       padding: theme.spacing(2),
+      backgroundColor: "#16234d",
+      color: "#fff",
    },
    closeButton: {
       position: "absolute",
@@ -60,6 +61,8 @@ const DialogTitle = withStyles(styles)((props) => {
 const DialogContent = withStyles((theme) => ({
    root: {
       padding: theme.spacing(2),
+      backgroundColor: "#16234d",
+      color: "#fff",
    },
 }))(MuiDialogContent);
 
@@ -67,6 +70,8 @@ const DialogActions = withStyles((theme) => ({
    root: {
       margin: 0,
       padding: theme.spacing(1),
+      backgroundColor: "#16234d",
+      color: "#fff",
    },
 }))(MuiDialogActions);
 
@@ -91,8 +96,10 @@ export default function Home() {
 
    const _createTodo = () => {
       createTodo(todo).then((data) => {
-         todos.push(data.todo);
-         setTodo({ ...todos });
+         if (data.todo) {
+            todos.push(data.todo);
+            setTodo({ ...todos });
+         }
       });
       setTodo("");
       handleClickOpen();
@@ -105,7 +112,6 @@ export default function Home() {
             setTodos(data.todos);
          } else {
             console.log("data: ", data);
-            // logout();
          }
       });
    };
@@ -116,8 +122,11 @@ export default function Home() {
          let info = JSON.parse(localStorage.getItem("jwt"));
          context.setUser({ id: info.id, name: info.name, token: info.token });
          setProfileName(context.user?.name);
-
          console.log(todos);
+      } else {
+         logout();
+         console.log("Redirecting");
+         return <Redirect to="/" />;
       }
    }, []);
 
@@ -150,15 +159,16 @@ export default function Home() {
                <Box>
                   <TextField
                      id="outlined-multiline-static"
-                     label="Multiline"
+                     placeholder="Enter todo..."
                      multiline
-                     rows={4}
+                     rows={5}
                      variant="outlined"
                      style={{ width: "100%" }}
                      value={todo}
                      onChange={(e) => {
                         setTodo(e.target.value);
                      }}
+                     color="primary"
                   />
                </Box>
             </DialogContent>

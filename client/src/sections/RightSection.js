@@ -6,6 +6,9 @@ import userIcon from "../assets/user-name.png";
 import { FaAngleRight } from "react-icons/fa";
 import { signup, login } from "../helper/authHelper";
 import { UserContext } from "../context/UserContext";
+// import Axios from "axios";
+import { api } from "../setup/config";
+import Axios from "../setup/axios";
 
 export default function RightSection() {
    const context = useContext(UserContext);
@@ -35,6 +38,9 @@ export default function RightSection() {
                   name: data.name,
                   token: data.token,
                });
+               Axios.defaults.headers.common.Authorization = `Bearer ${data.token}`;
+               Axios.defaults.headers.post["Content-Type"] = "application/json";
+               Axios.defaults.baseURL = api.baseUrl;
                console.log(context.user);
                localStorage.setItem("jwt", JSON.stringify(data));
             }

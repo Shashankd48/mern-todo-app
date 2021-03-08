@@ -83,7 +83,7 @@ exports.login = async (req, res) => {
                   jwt.sign(
                      payload,
                      myKey.secret,
-                     { expiresIn: 100 },
+                     { expiresIn: 300 },
                      (err, token) => {
                         if (err) {
                            console.log(err);
