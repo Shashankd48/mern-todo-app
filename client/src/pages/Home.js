@@ -18,6 +18,7 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
 
+import emptyTodo from "../assets/todo.svg";
 import {
    getTodos,
    createTodo,
@@ -98,7 +99,7 @@ export default function Home() {
       createTodo(todo).then((data) => {
          if (data.todo) {
             todos.push(data.todo);
-            setTodo({ ...todos });
+            setTodos([...todos]);
             setTodo("");
             setOpen(false);
          }
@@ -131,7 +132,7 @@ export default function Home() {
       markAsCompleted(id, !todos[index].markascompleted).then((data) => {
          if (!data.error) {
             todos[index].markascompleted = !todos[index].markascompleted;
-            setTodo({ ...todos });
+            setTodos([...todos]);
          }
       });
    };
@@ -182,21 +183,29 @@ export default function Home() {
                      color="primary"
                   />
                </Box>
-            </DialogContent>
-            <DialogActions>
-               <Box display="flex" justifyContent="space-bwteen">
+               <Box className="dialogAction">
                   <Box>
-                     <Button autoFocus onClick={handleClose} color="primary">
+                     <button
+                        className="cancelBtn"
+                        autoFocus
+                        onClick={handleClose}
+                        color="primary"
+                     >
                         Cancel
-                     </Button>
+                     </button>
                   </Box>
                   <Box>
-                     <Button autoFocus onClick={_createTodo} color="primary">
+                     <button
+                        className="createTodo"
+                        autoFocus
+                        onClick={_createTodo}
+                        color="primary"
+                     >
                         Add Todo
-                     </Button>
+                     </button>
                   </Box>
                </Box>
-            </DialogActions>
+            </DialogContent>
          </Dialog>
       );
    };
@@ -250,6 +259,12 @@ export default function Home() {
                         />
                      </div>
                   ))}
+                  {todos.length <= 0 && (
+                     <div className="emptyTodo">
+                        <img src={emptyTodo} alt="todo" />
+                        <p>Add today's task here...</p>
+                     </div>
+                  )}
                </div>
             </div>
          </div>

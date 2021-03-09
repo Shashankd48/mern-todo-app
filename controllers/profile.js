@@ -48,7 +48,6 @@ exports.removeTodo = async (req, res) => {
    return todo.deletedCount === 1
       ? res.status(200).json({
            error: false,
-           todo,
         })
       : res.status(400).json({
            error: true,
@@ -60,15 +59,12 @@ exports.removeTodo = async (req, res) => {
 exports.markAsCompleted = async (req, res) => {
    const { todoId, toggle } = req.params;
 
-   const todo = await Todo.findOneAndUpdate(
+   const todo = await Todo.updateOne(
       { _id: todoId, userId: req.user._id },
-      { $set: { markascompleted: toggle } },
-      { new: true }
-   ).select(["-__v", "-updatedAt", "-userId", "-createdAt"]);
-   return todo
+      { $set: { markascompleted: toggle } }
+   );
+   return todo.nModified === 1
       ? res.status(200).json({
-           message: "Todo marked as completed ✔",
-           todo,
            error: false,
         })
       : res.status(400).json({

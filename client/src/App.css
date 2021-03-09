@@ -300,6 +300,53 @@ span {
    box-shadow: 0 0 60px #fca869;
    z-index: 10;
 }
+.emptyTodo {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100%;
+   flex-direction: column;
+}
+.emptyTodo img {
+   width: 55%;
+}
+.emptyTodo p {
+   font-size: 24px;
+   color: #262626;
+   font-weight: 500;
+   letter-spacing: 1px;
+   margin-top: 30px;
+}
+
+.dialogAction {
+   display: flex;
+   justify-content: space-around;
+   padding: 20px 10px 6px;
+}
+.dialogAction .cancelBtn,
+.dialogAction .createTodo {
+   padding: 9px 20px;
+   font-size: 15px;
+   letter-spacing: 1px;
+   border: none;
+   border-radius: 100px;
+   margin-bottom: 5px;
+   color: #ffffff;
+   transition: all 250ms ease-in-out;
+}
+
+.cancelBtn {
+   background: linear-gradient(90deg, #da6b63 0%, #d39e54 100%);
+}
+.createTodo {
+   background: linear-gradient(120deg, #586a92, #244397);
+}
+
+@media (max-width: 776px) {
+   .emptyTodo img {
+      width: 75%;
+   }
+}
 
 @media (max-width: 576px) {
    .leftSection {
@@ -334,6 +381,9 @@ span {
    .addTodo {
       padding: 10px;
    }
+   .emptyTodo img {
+      width: 75%;
+   }
 }
 @media (max-wdth: 300px) {
    body {
@@ -364,3 +414,18 @@ span {
    outline: 1px solid rgb(43, 119, 196);
    border-radius: 20px;
 }
+
+/* <DialogActions>
+               <Box display="flex" justifyContent="space-bwteen">
+                  <Box>
+                     <Button autoFocus onClick={handleClose} color="primary">
+                        Cancel
+                     </Button>
+                  </Box>
+                  <Box>
+                     <Button autoFocus onClick={_createTodo} color="primary">
+                        Add Todo
+                     </Button>
+                  </Box>
+               </Box>
+            </DialogActions> */

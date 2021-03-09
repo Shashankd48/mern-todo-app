@@ -29,8 +29,9 @@ export default function RightSection() {
    const userLogin = () => {
       login({ email, password })
          .then((data) => {
+            console.log("data: ", data);
             if (data.error) {
-               setErrorMessage(data.error);
+               setErrorMessage(data.msg);
             } else {
                context.setUser({
                   id: data.id,
@@ -58,7 +59,7 @@ export default function RightSection() {
       signup({ name, email, password })
          .then((data) => {
             if (data.error) {
-               setErrorMessage(data.error);
+               setErrorMessage(data.msg);
             } else {
                context.setUser({
                   id: data.id,

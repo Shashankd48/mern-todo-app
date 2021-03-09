@@ -21,7 +21,8 @@ exports.signup = async (req, res) => {
       .then((user) => {
          if (user) {
             return res.status(400).json({
-               error: "Account already exist",
+               error: true,
+               msg: "Account already exist",
             });
          }
          const newUser = new User({
@@ -33,7 +34,8 @@ exports.signup = async (req, res) => {
          bcrypt.genSalt(10, (err, salt) => {
             if (err) {
                res.status(400).json({
-                  error: "Failed to generate salt!",
+                  error: true,
+                  msg: "Failed to generate salt!",
                });
             }
             bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -60,11 +62,13 @@ exports.signup = async (req, res) => {
                            if (err) {
                               console.log(err);
                               return res.status(500).json({
-                                 error: "Failed to generate token",
-                                 message: err,
+                                 error: true,
+                                 msg: "Failed to generate token",
+                                 decription: err,
                               });
                            }
                            return res.status(200).json({
+                              error: false,
                               id: user._id,
                               name: user.name,
                               token: token,
@@ -96,7 +100,8 @@ exports.login = async (req, res) => {
       .then((user) => {
          if (!user) {
             return res.status(400).json({
-               error: "User not found!",
+               error: true,
+               msg: "User not found!",
             });
          }
          bcrypt
@@ -117,11 +122,13 @@ exports.login = async (req, res) => {
                         if (err) {
                            console.log(err);
                            return res.status(500).json({
-                              error: "Failed to generate token",
-                              message: err,
+                              erorr: true,
+                              msg: "Failed to generate token",
+                              decription: err,
                            });
                         }
                         return res.status(200).json({
+                           error: false,
                            id: user._id,
                            name: user.name,
                            token: token,
@@ -130,8 +137,9 @@ exports.login = async (req, res) => {
                   );
                } else {
                   res.status(400).json({
+                     error: true,
                      email,
-                     error: "Incorrect Username or Password !",
+                     msg: "Incorrect Username or Password !",
                   });
                }
             })

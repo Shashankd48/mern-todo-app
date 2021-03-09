@@ -26,7 +26,7 @@ app.use(passport.initialize());
 require("./strategies/jsonwtStrategy")(passport);
 
 // TODO: Server the static page and profuction build
-// app.use(express.static("client/build"));
+app.use(express.static("client/build"));
 
 //Routes middleware
 app.use("/todo/api/auth", authRoute);

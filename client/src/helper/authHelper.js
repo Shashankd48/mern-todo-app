@@ -12,7 +12,7 @@ export function signup(user) {
          return result.data;
       })
       .catch((error) => {
-         throw error;
+         return error.response.data;
       });
 }
 
@@ -26,6 +26,6 @@ export function login(user) {
          return result.data;
       })
       .catch((error) => {
-         throw error;
+         return error.response.data;
       });
 }
