@@ -45,10 +45,9 @@ exports.removeTodo = async (req, res) => {
    const { todoId } = req.params;
    const todo = await Todo.deleteOne({ _id: todoId, userId: req.user._id });
 
-   return todo.deletedCount === 0
+   return todo.deletedCount === 1
       ? res.status(200).json({
            error: false,
-           message: "Todo does not exist ❌",
            todo,
         })
       : res.status(400).json({

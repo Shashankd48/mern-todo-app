@@ -116,6 +116,26 @@ export default function Home() {
       });
    };
 
+   const _deleteTodo = (id) => {
+      removeTodo(id).then((data) => {
+         if (!data.error) {
+            let list = todos.filter((todo) => todo._id != id);
+            console.log("data: list", list);
+            setTodos(list);
+         }
+      });
+   };
+
+   const checkTodo = (id) => {
+      let index = todos.findIndex((todo) => todo._id === id);
+      markAsCompleted(id, !todos[index].markascompleted).then((data) => {
+         if (!data.error) {
+            todos[index].markascompleted = !todos[index].markascompleted;
+            setTodo({ ...todos });
+         }
+      });
+   };
+
    useEffect(() => {
       if (localStorage.getItem("jwt")) {
          _getTodos();
@@ -133,16 +153,6 @@ export default function Home() {
    if (!context.user?.id) {
       return <Redirect to="/" />;
    }
-
-   const checkTodo = (id) => {
-      let index = todos.findIndex((todo) => todo._id === id);
-      markAsCompleted(id, !todos[index].markascompleted).then((data) => {
-         if (!data.error) {
-            todos[index].markascompleted = !todos[index].markascompleted;
-            setTodo({ ...todos });
-         }
-      });
-   };
 
    const dialog = () => {
       return (
@@ -225,22 +235,21 @@ export default function Home() {
                </div>
 
                <div className="todoSection px-4">
-                  {todos.map((todo, index) => {
-                     console.log("home", todo.markascompleted);
-                     return (
-                        <div key={todo._id}>
-                           <Card
-                              index={index}
-                              id={todo._id}
-                              text={todo.todo}
-                              markascompleted={todo.markascompleted}
-                              checkTodo={() => {
-                                 checkTodo(todo._id);
-                              }}
-                           />
-                        </div>
-                     );
-                  })}
+                  {todos.map((todo, index) => (
+                     <div key={todo._id}>
+                        <Card
+                           index={index}
+                           text={todo.todo}
+                           markascompleted={todo.markascompleted}
+                           checkTodo={() => {
+                              checkTodo(todo._id);
+                           }}
+                           deleteTodo={() => {
+                              _deleteTodo(todo._id);
+                           }}
+                        />
+                     </div>
+                  ))}
                </div>
             </div>
          </div>
