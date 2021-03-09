@@ -311,11 +311,20 @@ span {
    width: 55%;
 }
 .emptyTodo p {
+   font-size: 18px;
+   color: #262626;
+   font-weight: 500;
+   letter-spacing: 1px;
+   margin-top: 7px;
+   opacity: 0.8;
+}
+.emptyTodo h3 {
    font-size: 24px;
    color: #262626;
    font-weight: 500;
    letter-spacing: 1px;
    margin-top: 30px;
+   opacity: 0.95;
 }
 
 .dialogAction {

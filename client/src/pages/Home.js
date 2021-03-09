@@ -262,7 +262,8 @@ export default function Home() {
                   {todos.length <= 0 && (
                      <div className="emptyTodo">
                         <img src={emptyTodo} alt="todo" />
-                        <p>Add today's task here...</p>
+                        <h3>Empty todo list!</h3>
+                        <p>Be productive! create your todo list now...</p>
                      </div>
                   )}
                </div>
