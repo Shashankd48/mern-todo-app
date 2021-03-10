@@ -4,4 +4,5 @@ jspm_packages/
 # Optional npm cache directory
 .npm
 .env
+.env.production
 client/node_modules/
