@@ -87,7 +87,7 @@ export default function Home() {
    };
 
    const _createTodo = () => {
-      todos.push(todo);
+      todos.push({ _id: null, todo, markascompleted: false });
       setTodos([...todos]);
       setOpen(false);
       createTodo(todo).then((data) => {
@@ -95,7 +95,7 @@ export default function Home() {
             todos.pop();
             setTodos([...todos]);
          } else {
-            todos[todos.length - 1] = data.todo;
+            todos[todos.length - 1]["_id"] = data.todo._id;
             // todos.push(data.todo);
             setTodos([...todos]);
          }
