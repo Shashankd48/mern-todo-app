@@ -127,9 +127,11 @@ export default function Home() {
    const checkTodo = (id) => {
       let index = todos.findIndex((todo) => todo._id === id);
       let temp = todos[index];
+      let toggle = !todos[index].markascompleted;
       todos[index].markascompleted = !todos[index].markascompleted;
       setTodos([...todos]);
-      markAsCompleted(id, !todos[index].markascompleted).then((data) => {
+      markAsCompleted(id, toggle).then((data) => {
+         console.log(data);
          if (data.error) {
             todos.push(temp);
             setTodos([...todos]);

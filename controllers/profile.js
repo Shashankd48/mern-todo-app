@@ -63,6 +63,9 @@ exports.markAsCompleted = async (req, res) => {
       { _id: todoId, userId: req.user._id },
       { $set: { markascompleted: toggle } }
    );
+   console.log(toggle);
+   console.log(todoId);
+   console.log(todo);
    return todo.nModified === 1
       ? res.status(200).json({
            error: false,
