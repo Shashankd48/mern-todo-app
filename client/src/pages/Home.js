@@ -87,42 +87,51 @@ export default function Home() {
    };
 
    const _createTodo = () => {
+      todos.push(todo);
+      setTodos([...todos]);
       createTodo(todo).then((data) => {
-         if (data.todo) {
-            todos.push(data.todo);
+         if (data.error) {
+            todos.pop();
             setTodos([...todos]);
-            setTodo("");
-            setOpen(false);
+         } else {
+            todos[todos.length - 1] = data.todo;
+            // todos.push(data.todo);
+            setTodos([...todos]);
          }
+         setTodo("");
+         setOpen(false);
       });
    };
 
    const _getTodos = () => {
       getTodos().then((data) => {
-         console.log("data: ", data);
          if (!data.error) {
             setTodos(data.todos);
-         } else {
-            console.log("data: ", data);
          }
       });
    };
 
    const _deleteTodo = (id) => {
+      let index = todos.findIndex((todo) => todo._id === id);
+      let temp = todos[index];
+      let list = todos.filter((todo) => todo._id != id);
+      setTodos(list);
       removeTodo(id).then((data) => {
-         if (!data.error) {
-            let list = todos.filter((todo) => todo._id != id);
-            console.log("data: list", list);
-            setTodos(list);
+         if (data.error) {
+            todos.push(temp);
+            setTodos([...todos]);
          }
       });
    };
 
    const checkTodo = (id) => {
       let index = todos.findIndex((todo) => todo._id === id);
+      let temp = todos[index];
+      todos[index].markascompleted = !todos[index].markascompleted;
+      setTodos([...todos]);
       markAsCompleted(id, !todos[index].markascompleted).then((data) => {
-         if (!data.error) {
-            todos[index].markascompleted = !todos[index].markascompleted;
+         if (data.error) {
+            todos.push(temp);
             setTodos([...todos]);
          }
       });

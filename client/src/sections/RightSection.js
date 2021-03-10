@@ -160,7 +160,7 @@ export default function RightSection() {
       );
    };
    return (
-      <div className="col-sm-6 rightSection">
+      <div className="col-sm-6 rightSection  order-lg-4">
          {formToggler === true ? signupForm() : loginForm()}
       </div>
    );

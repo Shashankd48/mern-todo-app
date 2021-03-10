@@ -18,8 +18,8 @@ export default function Auth() {
    }
    return (
       <div className="row m-0">
-         <LeftSection />
          <RightSection />
+         <LeftSection />
       </div>
    );
 }
