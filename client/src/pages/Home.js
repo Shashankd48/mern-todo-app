@@ -67,15 +67,6 @@ const DialogContent = withStyles((theme) => ({
    },
 }))(MuiDialogContent);
 
-const DialogActions = withStyles((theme) => ({
-   root: {
-      margin: 0,
-      padding: theme.spacing(1),
-      backgroundColor: "#16234d",
-      color: "#fff",
-   },
-}))(MuiDialogActions);
-
 export default function Home() {
    const context = useContext(UserContext);
    const [profileName, setProfileName] = useState("");
