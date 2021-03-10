@@ -5,6 +5,7 @@ const port = process.env.PORT || 5000;
 const passport = require("passport");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
 // Connection to Database
 require("./setup/dbConfig");
@@ -25,12 +26,15 @@ app.use(passport.initialize());
 // Configuration for JWT strategy
 require("./strategies/jsonwtStrategy")(passport);
 
-// TODO: Server the static page and profuction build
-app.use(express.static("client/build"));
-
 //Routes middleware
 app.use("/todo/api/auth", authRoute);
 app.use("/todo/api/profile", profileRoute);
+
+// TODO: Server the static page and profuction build
+app.use(express.static("client/build"));
+app.use((req, res, next) => {
+   res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
 
 app.listen(port, () =>
    console.log(`App is running on localhost at port: ${port}`)
