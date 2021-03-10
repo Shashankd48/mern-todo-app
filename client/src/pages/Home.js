@@ -89,6 +89,7 @@ export default function Home() {
    const _createTodo = () => {
       todos.push(todo);
       setTodos([...todos]);
+      setOpen(false);
       createTodo(todo).then((data) => {
          if (data.error) {
             todos.pop();
@@ -99,7 +100,6 @@ export default function Home() {
             setTodos([...todos]);
          }
          setTodo("");
-         setOpen(false);
       });
    };
 
