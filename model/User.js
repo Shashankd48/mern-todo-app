@@ -20,6 +20,10 @@ var UserSchema = new mongoose.Schema(
          trim: true,
          minlength: 6,
       },
+      resetPasswordToken: {
+         type: String,
+         required: false,
+      },
    },
    { timestamps: true, collection: "User" }
 );

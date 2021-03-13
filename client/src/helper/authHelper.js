@@ -29,3 +29,16 @@ export function login(user) {
          return error.response.data;
       });
 }
+
+export function resetPassword(email) {
+   let request = Axios.post(`${api.auth}/resetPassword`, {
+      email,
+   });
+   return request
+      .then((result) => {
+         return result.data;
+      })
+      .catch((error) => {
+         return error.response.data;
+      });
+}

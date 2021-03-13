@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { login, signup } = require("../controllers/auth");
+const {
+   login,
+   signup,
+   resetPassword,
+   updatePassword,
+} = require("../controllers/auth");
 const { check } = require("express-validator");
 
 // @route    -  POST /todo/api/auth/signup
@@ -32,6 +37,24 @@ router.post(
       }),
    ],
    login
+);
+
+// @route    -  POST   /todo/api/auth/resetPassword
+// @desc    -   Login routes
+// @access  -   PUBLIC
+router.post(
+   "/resetPassword",
+   [check("email", "Email is required").isEmail()],
+   resetPassword
+);
+
+// @route    -  POST   /todo/api/auth/resetPassword
+// @desc    -   Login routes
+// @access  -   PUBLIC
+router.get(
+   "/updatePassword/:token",
+   [check("token", "Invalid Token").isLength({ min: 200 })],
+   updatePassword
 );
 
 module.exports = router;

@@ -4,10 +4,11 @@ import passIcon from "../assets/passoword.png";
 import emailIcon from "../assets/email.png";
 import userIcon from "../assets/user-name.png";
 import { FaAngleRight } from "react-icons/fa";
-import { signup, login } from "../helper/authHelper";
+import { signup, login, resetPassword } from "../helper/authHelper";
 import { UserContext } from "../context/UserContext";
 import { api } from "../setup/config";
 import Axios from "../setup/axios";
+import e from "express";
 
 export default function RightSection() {
    const context = useContext(UserContext);
@@ -16,6 +17,7 @@ export default function RightSection() {
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
    const [errorMessage, setErrorMessage] = useState("");
+   const [forgotPassword, setForgotPassword] = useState(false);
 
    const giveErrorMessage = () => {
       return <div className="errorMessage">{errorMessage}</div>;
@@ -23,6 +25,7 @@ export default function RightSection() {
    //    Switch Forms
    const switchForm = () => {
       setFormToggler(!formToggler);
+      setForgotPassword(false);
       setErrorMessage("");
    };
 
@@ -75,8 +78,18 @@ export default function RightSection() {
          })
          .catch((err) => console.log("Login Failed" + err));
    };
+
+   const handleResetPassword = (event) => {
+      event.preventDefault();
+      resetPassword(email).then((data) => {
+         if (data.error) {
+            setErrorMessage(data.msg);
+         }
+      });
+   };
+
    // Forms goes here...
-   const loginForm = () => {
+   const LoginForm = () => {
       return (
          <form onSubmit={handleLogin}>
             <h3 className="text-center">Login</h3>
@@ -110,10 +123,17 @@ export default function RightSection() {
                   </span>
                </span>
             </div>
+            <div className="text-center">
+               <span onClick={() => setForgotPassword(!forgotPassword)}>
+                  Forgot {""}
+                  <span className="formSwitch">password ?</span>
+               </span>
+            </div>
          </form>
       );
    };
-   const signupForm = () => {
+
+   const SignupForm = () => {
       return (
          <form onSubmit={handleSignup}>
             <h3 className="text-center">Sign Up</h3>
@@ -159,9 +179,43 @@ export default function RightSection() {
          </form>
       );
    };
+
+   const ForgetPassword = () => {
+      return (
+         <form onSubmit={handleResetPassword}>
+            <h3 className="text-center">Reset Password</h3>
+            <Input
+               icon={emailIcon}
+               labelText="Email"
+               type="email"
+               width="18px"
+               height="14px"
+               value={email}
+               onChange={(e) => setEmail(e.target.value)}
+            />
+            {errorMessage !== "" ? giveErrorMessage() : ""}
+            <button type="submit" className="authBtn mb-3">
+               Send Email <FaAngleRight />
+            </button>
+            <div className="text-center">
+               <span>
+                  Create a new account here...{" "}
+                  <span className="formSwitch" onClick={switchForm}>
+                     Sign Up
+                  </span>
+               </span>
+            </div>
+         </form>
+      );
+   };
+
    return (
       <div className="col-sm-6 rightSection  order-lg-4">
-         {formToggler === true ? signupForm() : loginForm()}
+         {forgotPassword
+            ? ForgetPassword()
+            : formToggler
+            ? SignupForm()
+            : LoginForm()}
       </div>
    );
 }
