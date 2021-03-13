@@ -17,6 +17,8 @@ import {
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import CloseIcon from "@material-ui/icons/Close";
+import "../App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import emptyTodo from "../assets/todo.svg";
 import {

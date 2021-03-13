@@ -8,7 +8,6 @@ import { signup, login, resetPassword } from "../helper/authHelper";
 import { UserContext } from "../context/UserContext";
 import { api } from "../setup/config";
 import Axios from "../setup/axios";
-import e from "express";
 
 export default function RightSection() {
    const context = useContext(UserContext);

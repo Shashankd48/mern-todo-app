@@ -7,7 +7,6 @@ const mailer = require("../setup/mailer");
 const fs = require("fs");
 const Handlebars = require("handlebars");
 const path = require("path");
-const crypto = require("crypto");
 
 exports.signup = async (req, res) => {
    // validate user data
@@ -199,7 +198,7 @@ exports.resetPassword = async (req, res) => {
          var template = Handlebars.compile(source);
          const data = {
             name: foundUser.name,
-            url: `${myKey.clientUrl}/updatePassword/${token}`,
+            url: `${myKey.clientUrl}/${token}`,
          };
          // let info = await mailer.sendMail({
          //    from: `"Particle Todo 🔑" <${myKey.email}>`, // sender address

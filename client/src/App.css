@@ -351,6 +351,10 @@ span {
    background: linear-gradient(120deg, #586a92, #244397);
 }
 
+.updatePassword form h3 {
+   margin-bottom: 75px;
+}
+
 @media (max-width: 776px) {
    .emptyTodo img {
       width: 75%;
@@ -369,8 +373,14 @@ span {
       min-height: 52vh;
       height: 400px;
    }
+   .updatePassword.rightSection {
+      height: 100vh;
+   }
    form h3 {
       margin-bottom: 25px;
+   }
+   .updatePassword form h3 {
+      margin-bottom: 75px;
    }
    .navBar img {
       left: -30px;
@@ -423,18 +433,3 @@ span {
    outline: 1px solid rgb(43, 119, 196);
    border-radius: 20px;
 }
-
-/* <DialogActions>
-               <Box display="flex" justifyContent="space-bwteen">
-                  <Box>
-                     <Button autoFocus onClick={handleClose} color="primary">
-                        Cancel
-                     </Button>
-                  </Box>
-                  <Box>
-                     <Button autoFocus onClick={_createTodo} color="primary">
-                        Add Todo
-                     </Button>
-                  </Box>
-               </Box>
-            </DialogActions> */
