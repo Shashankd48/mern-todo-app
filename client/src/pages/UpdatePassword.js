@@ -11,7 +11,7 @@ export default function UpdatePassword() {
    const [confirmPassword, setConfirmPassword] = useState("");
    const [errorMessage, setErrorMessage] = useState("");
    const [toggleShowPassword, setToggleShowPassword] = useState(false);
-   const [isPasswordUpdated, setIsPasswordUpdated] = useState(false);
+   const [isPasswordUpdated, setIsPasswordUpdated] = useState(true);
    const params = useParams();
 
    const giveErrorMessage = () => {
@@ -34,12 +34,18 @@ export default function UpdatePassword() {
       updatePassword(password, params.token).then((data) => {
          console.log("data: ");
          if (data.error) {
-            setErrorMessage(data.msg);
+            if (
+               data.error === "jwt malformed" ||
+               data.error === "invalid signature" ||
+               data.error === "jwt expired"
+            ) {
+               setErrorMessage("Invalid Token");
+            }
          } else {
-            // setIsPasswordUpdated(true);
             setPassword("");
             setConfirmPassword("");
             setErrorMessage("Your password has been updated!");
+            setIsPasswordUpdated(true);
          }
       });
    };
@@ -55,6 +61,7 @@ export default function UpdatePassword() {
                   </span>
                </h1>
             </Link>
+            <h5>{errorMessage}</h5>
          </div>
       );
    };

@@ -202,15 +202,15 @@ exports.resetPassword = async (req, res) => {
             name: foundUser.name,
             url: `${myKey.clientUrl}/updatePassword/${token}`,
          };
-         // let info = await mailer.sendMail({
-         //    from: `"Particle Todo 🔑" <${myKey.email}>`, // sender address
-         //    to: email, // list of receivers
-         //    subject: "Reset Password", // Subject line
-         //    html: template(data), // html body
-         // });
+         let info = await mailer.sendMail({
+            from: `"Particle Todo 🔑" <${myKey.email}>`, // sender address
+            to: email, // list of receivers
+            subject: "Reset Password", // Subject line
+            html: template(data), // html body
+         });
 
-         // console.log(info);
-         // console.log("Message sent: %s", info.messageId);
+         console.log(info);
+         console.log("Message sent: %s", info.messageId);
          console.log(template(data));
          return res.status(200).json({ error: false, token });
       } catch (error) {

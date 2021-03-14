@@ -17,7 +17,7 @@ export default function RightSection() {
    const [password, setPassword] = useState("");
    const [errorMessage, setErrorMessage] = useState("");
    const [forgotPassword, setForgotPassword] = useState(false);
-
+   const [isEmailSent, setIsEmailSent] = useState(false);
    const giveErrorMessage = () => {
       return <div className="errorMessage">{errorMessage}</div>;
    };
@@ -26,6 +26,7 @@ export default function RightSection() {
       setFormToggler(!formToggler);
       setForgotPassword(false);
       setErrorMessage("");
+      setIsEmailSent(false);
    };
 
    const userLogin = () => {
@@ -83,6 +84,9 @@ export default function RightSection() {
       resetPassword(email).then((data) => {
          if (data.error) {
             setErrorMessage(data.msg);
+         } else {
+            setIsEmailSent(true);
+            setErrorMessage("Please check your email to reset password!");
          }
       });
    };
@@ -199,7 +203,7 @@ export default function RightSection() {
             />
             {errorMessage !== "" ? giveErrorMessage() : ""}
             <button type="submit" className="authBtn mb-3">
-               Send Email <FaAngleRight />
+               {isEmailSent ? "Resend Email" : "Send Email"} <FaAngleRight />
             </button>
             <div className="text-center">
                <span>
