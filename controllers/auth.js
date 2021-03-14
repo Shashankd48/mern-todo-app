@@ -249,6 +249,7 @@ exports.updatePassword = async (req, res) => {
          { $set: { password: encryptedPassword } }
       );
 
+      console.log(updateUser);
       return updateUser.nModified
          ? res.status(200).json({ error: false })
          : res
