@@ -202,17 +202,15 @@ exports.resetPassword = async (req, res) => {
             name: foundUser.name,
             url: `${myKey.clientUrl}/updatePassword/${token}`,
          };
+
          let info = await mailer.sendMail({
-            from: `"Particle Todo 🔑" <${myKey.email}>`, // sender address
-            to: email, // list of receivers
-            subject: "Reset Password", // Subject line
-            html: template(data), // html body
+            from: `"Particle Todo 🔑" <${myKey.email}>`,
+            to: email,
+            subject: "Reset Password",
+            html: template(data),
          });
 
-         console.log(info);
-         console.log("Message sent: %s", info.messageId);
-         console.log(template(data));
-         return res.status(200).json({ error: false, token });
+         return res.status(200).json({ error: false });
       } catch (error) {
          return res.status(500).json({
             error: true,
@@ -238,9 +236,6 @@ exports.updatePassword = async (req, res) => {
 
       const encryptedPassword = await bcrypt.hash(password, salt);
 
-      console.log(password);
-      console.log(token);
-      console.log(data);
       const updateUser = await User.updateOne(
          {
             _id: data.id,
@@ -249,7 +244,6 @@ exports.updatePassword = async (req, res) => {
          { $set: { password: encryptedPassword } }
       );
 
-      console.log(updateUser);
       return updateUser.nModified
          ? res.status(200).json({ error: false })
          : res

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FaTimes, FaCheck } from "react-icons/fa";
 
 export default function Card({

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { UserContext } from "./context/UserContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PageNotFound from "./pages/PageNotFound";

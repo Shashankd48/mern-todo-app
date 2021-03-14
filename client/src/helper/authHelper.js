@@ -52,7 +52,6 @@ export function updatePassword(password, token) {
          return result.data;
       })
       .catch((error) => {
-         console.log("error:", error.response.data);
          return error.response.data;
       });
 }

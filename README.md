@@ -1,68 +1,47 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Enviroment variables for backend
+DBURL = [mongodb://localhost:27017/todo]
 
-In the project directory, you can run:
+secret = [your secret]
 
-### `npm start`
+PASSWORD_SECRET = [Password Reset secret]
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+EMAIL = [Email to send reset pasword link] [Using smtp.google.com]
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+PASSWORD = [Password of your email]
 
-### `npm test`
+CLIENT_URL = [Your backend url while serving as static files]
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Enviroment variables for front-end [.env.production && .env]
 
-### `npm run build`
+REACT_APP_AUTHAPI = [Host_Name/todo/api/auth]
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+REACT_APP_PROFILEAPI = [Host_Name/todo/api/profile]
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+REACT_APP_BASEURL = [Host_Name/todo/api]
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## 1. Available Scripts [Run front-end and backend on two different ports]
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## `npm install'
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 'npm start' || `npm run start:dev`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+cd client
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## `npm install'
 
-## Learn More
+## 'npm start' 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 2. Serve frontend as static files from express [Run these scripts]
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 'npm install'
 
-### Code Splitting
+## 'npm start' || `npm run start:dev`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+cd client
 
-### Analyzing the Bundle Size
+## `npm run build`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

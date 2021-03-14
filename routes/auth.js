@@ -51,8 +51,8 @@ router.post(
    resetPassword
 );
 
-// @route    -  POST   /todo/api/auth/resetPassword
-// @desc    -   Login routes
+// @route    -  POST   /todo/api/auth/updatePassword
+// @desc    -   Updated Password routes
 // @access  -   PUBLIC
 router.post(
    "/updatePassword/:token",

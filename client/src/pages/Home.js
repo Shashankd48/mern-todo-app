@@ -70,7 +70,7 @@ const DialogContent = withStyles((theme) => ({
 export default function Home() {
    const context = useContext(UserContext);
    const [profileName, setProfileName] = useState("");
-   const [test, setTest] = useState(false);
+
    const [todos, setTodos] = useState([]);
    const [todo, setTodo] = useState("");
    const [open, setOpen] = useState(false);
@@ -96,7 +96,6 @@ export default function Home() {
             setTodos([...todos]);
          } else {
             todos[todos.length - 1]["_id"] = data.todo._id;
-            // todos.push(data.todo);
             setTodos([...todos]);
          }
          setTodo("");
@@ -114,7 +113,7 @@ export default function Home() {
    const _deleteTodo = (id) => {
       let index = todos.findIndex((todo) => todo._id === id);
       let temp = todos[index];
-      let list = todos.filter((todo) => todo._id != id);
+      let list = todos.filter((todo) => todo._id !== id);
       setTodos(list);
       removeTodo(id).then((data) => {
          if (data.error) {
@@ -151,6 +150,7 @@ export default function Home() {
          console.log("Redirecting");
          return <Redirect to="/" />;
       }
+      // eslint-disable-next-line
    }, []);
 
    if (!context.user?.id) {
@@ -235,7 +235,7 @@ export default function Home() {
                         </svg>
                      </span>
                   </p>
-                  <p>{test}</p>
+
                   <button onClick={logout}>Logout</button>
                </div>
 

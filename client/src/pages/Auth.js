@@ -11,6 +11,7 @@ export default function Auth() {
          let info = JSON.parse(localStorage.getItem("jwt"));
          context.setUser({ id: info.id, name: info.name });
       }
+      // eslint-disable-next-line
    }, []);
 
    if (context.user?.id) {
