@@ -11,7 +11,7 @@ export default function UpdatePassword() {
    const [confirmPassword, setConfirmPassword] = useState("");
    const [errorMessage, setErrorMessage] = useState("");
    const [toggleShowPassword, setToggleShowPassword] = useState(false);
-   const [isPasswordUpdated, setIsPasswordUpdated] = useState(true);
+   const [isPasswordUpdated, setIsPasswordUpdated] = useState(false);
    const params = useParams();
 
    const giveErrorMessage = () => {
