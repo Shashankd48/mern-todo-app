@@ -177,10 +177,12 @@ exports.resetPassword = async (req, res) => {
       }
 
       const payload = {
-         _id: foundUser._id,
+         id: foundUser._id,
          email: foundUser.email,
       };
-      const token = jwt.sign(payload, myKey.secret, { expiresIn: "10min" });
+      const token = jwt.sign(payload, myKey.passwordSecret, {
+         expiresIn: "10min",
+      });
 
       await User.updateOne(
          { _id: foundUser._id },
@@ -210,7 +212,7 @@ exports.resetPassword = async (req, res) => {
          // console.log(info);
          // console.log("Message sent: %s", info.messageId);
          console.log(template(data));
-         return res.status(200).json({ error: false });
+         return res.status(200).json({ error: false, token });
       } catch (error) {
          return res.status(500).json({
             error: true,
@@ -230,12 +232,15 @@ exports.updatePassword = async (req, res) => {
       const { password } = req.body;
       const { token } = req.params;
 
-      const data = jwt.verify(token, myKey.secret);
+      const data = jwt.verify(token, myKey.passwordSecret);
 
       const salt = await bcrypt.genSalt(10);
 
       const encryptedPassword = await bcrypt.hash(password, salt);
 
+      console.log(password);
+      console.log(token);
+      console.log(data);
       const updateUser = await User.updateOne(
          {
             _id: data.id,
