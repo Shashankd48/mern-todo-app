@@ -7,11 +7,9 @@ import Navbar from "../components/Navbar";
 import {
    Box,
    Typography,
-   Button,
    Dialog,
    DialogTitle as MuiDialogTitle,
    DialogContent as MuiDialogContent,
-   DialogActions as MuiDialogActions,
    IconButton,
    TextField,
 } from "@material-ui/core";

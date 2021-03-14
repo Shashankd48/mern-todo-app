@@ -2,6 +2,7 @@ export const api = {
    auth: "todo/api/auth",
    profile: "todo/api/profile",
    baseUrl: "todo/api",
+   host: "/",
 };
 
 // export const api = {

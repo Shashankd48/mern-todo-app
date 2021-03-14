@@ -42,3 +42,17 @@ export function resetPassword(email) {
          return error.response.data;
       });
 }
+
+export function updatePassword(password, token) {
+   let request = Axios.post(`${api.auth}/updatePassword/${token}`, {
+      password,
+   });
+   return request
+      .then((result) => {
+         return result.data;
+      })
+      .catch((error) => {
+         console.log("error:", error.response.data);
+         return error.response.data;
+      });
+}

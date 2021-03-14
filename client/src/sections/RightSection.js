@@ -123,7 +123,12 @@ export default function RightSection() {
                </span>
             </div>
             <div className="text-center">
-               <span onClick={() => setForgotPassword(!forgotPassword)}>
+               <span
+                  onClick={() => {
+                     setErrorMessage("");
+                     setForgotPassword(!forgotPassword);
+                  }}
+               >
                   Forgot {""}
                   <span className="formSwitch">password ?</span>
                </span>

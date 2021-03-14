@@ -117,6 +117,10 @@ span {
 .formSwitch:focus::after {
    transform: scaleX(1);
 }
+.head.formSwitch::after {
+   top: 53px;
+   height: 0.22rem;
+}
 /* login and signup button */
 .authBtn {
    margin-top: 10px;

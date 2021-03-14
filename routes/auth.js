@@ -32,7 +32,10 @@ router.post(
    "/login",
    [
       check("email", "Email is required").isEmail(),
-      check("password", "Password should be at 6 character long").isLength({
+      check(
+         "password",
+         "Password should be at least 6 character long!"
+      ).isLength({
          min: 6,
       }),
    ],
@@ -51,9 +54,14 @@ router.post(
 // @route    -  POST   /todo/api/auth/resetPassword
 // @desc    -   Login routes
 // @access  -   PUBLIC
-router.get(
+router.post(
    "/updatePassword/:token",
-   [check("token", "Invalid Token").isLength({ min: 200 })],
+   [
+      check("token", "Invalid Token").isLength({ min: 200 }),
+      check("password", "Password must contain 6 character!").isLength({
+         min: 6,
+      }),
+   ],
    updatePassword
 );
 

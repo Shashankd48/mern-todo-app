@@ -198,7 +198,7 @@ exports.resetPassword = async (req, res) => {
          var template = Handlebars.compile(source);
          const data = {
             name: foundUser.name,
-            url: `${myKey.clientUrl}/${token}`,
+            url: `${myKey.clientUrl}/updatePassword/${token}`,
          };
          // let info = await mailer.sendMail({
          //    from: `"Particle Todo 🔑" <${myKey.email}>`, // sender address
@@ -210,9 +210,7 @@ exports.resetPassword = async (req, res) => {
          // console.log(info);
          // console.log("Message sent: %s", info.messageId);
          console.log(template(data));
-         return res
-            .status(200)
-            .json({ error: false, template: data, token, foundUser });
+         return res.status(200).json({ error: false });
       } catch (error) {
          return res.status(500).json({
             error: true,
@@ -240,18 +238,20 @@ exports.updatePassword = async (req, res) => {
 
       const updateUser = await User.updateOne(
          {
-            _id: data._id,
+            _id: data.id,
             email: data.email,
          },
-         { password: encryptedPassword }
+         { $set: { password: encryptedPassword } }
       );
 
       return updateUser.nModified
-         ? res.status(200).json({ error: false, data, updateUser, password })
+         ? res.status(200).json({ error: false })
          : res
               .status(500)
               .json({ error: true, msg: "Failed to update password" });
    } catch (error) {
-      return res.status(500).json({ error: true, errorData: error });
+      return res
+         .status(400)
+         .json({ error: true, msg: error.message, errorData: error });
    }
 };
