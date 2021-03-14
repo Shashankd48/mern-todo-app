@@ -31,10 +31,10 @@ app.use("/todo/api/auth", authRoute);
 app.use("/todo/api/profile", profileRoute);
 
 // TODO: Server the static page and profuction build
-// app.use(express.static("client/build"));
-// app.use((req, res, next) => {
-//    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-// });
+app.use(express.static("client/build"));
+app.use((req, res, next) => {
+   res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
 
 app.listen(port, () =>
    console.log(`App is running on localhost at port: ${port}`)
