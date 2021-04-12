@@ -28,7 +28,7 @@ REACT_APP_BASEURL = [Host_Name/todo/api]
 
 `npm start` || `npm run start:dev`
 
-## cd client
+cd client
 
 `npm install`
 
