@@ -24,24 +24,24 @@ REACT_APP_BASEURL = [Host_Name/todo/api]
 
 ## 1. Available Scripts [Run front-end and backend on two different ports]
 
-## `npm install'
+`npm install`
 
-## 'npm start' || `npm run start:dev`
+`npm start` || `npm run start:dev`
 
-cd client
+## cd client
 
-## `npm install'
+`npm install`
 
-## 'npm start' 
+`npm start`
 
 ## 2. Serve frontend as static files from express [Run these scripts]
 
-## 'npm install'
+`npm install`
 
-## 'npm start' || `npm run start:dev`
+`npm start` || `npm run start:dev`
 
 cd client
 
-## `npm run build`
+`npm run build`
 
 
